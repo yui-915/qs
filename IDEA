@@ -1,0 +1,28 @@
+a dynamically typed interpreted programming language meant for doing quick strings minipulations 
+mostly copying javascript and giving the .split() .join() .replace() .map() methods a special operator
+should not be used to make long runnings apps/background tasks, tho why not
+no prototype, no classes
+available datatypes are: strings, numbers (f64), booleans, nil 
+also arrays (Vec) and objects (HashMap) and maybe sets (HashSet) 
+and regex ???!?!!
+_ is a special variable that contains the result of the last statement
+functions are values 
+easy syntax for declaring variables (smth like go) and closures (like rust ?)
+there isn't two types of comparisons, variables of different types are never equal
+implicit return ?
+loops (while, for, for each, for in range, break, continue, labels)
+a way to get value of statement "x" (for use in repl) or line "x" (for files?)
+repl
+some sort of live updates
+nice tui for dubugging
+easy debugging?
+only objects are objects
+some sort of signals/event handles
+significant whitespace for order of arithmetic operations ?!?!!
+newline is end of statement
+a way to look into the history of a variable ?!
+strict mode
+everything is copied by value, no implicit references
+references, they act like normal variables, but share the same memory, smth like hard links in linux fs
+you can start variable names with numbers
+json, toml, yaml, etc..

@@ -1,0 +1,119 @@
+// this is a comment
+/*
+this is also a comment
+*/
+
+str := "hello"
+multiline_str := "hello
+world"
+copy_of_str := _
+
+"hello, world!"? // print
+_ ? // also print
+_ ?? // debug (print with line number/name/time/idk)
+
+// from keys, from values, from entries, 
+
+str := "hello_world_string_123"
+str$'_'? // ["hello", "world", "string", "123"] split
+str$$'_'? // ["hello", "world_string_123"] split_once
+str$'_'$'-'? // "hello-world-string-123" split + join = replace all
+str$$'_'$'-'? // "hello-world_string_123" split_once + join = replace once
+str$'_'$$'-'$' '? // "hello-world string 123" // split + join_once + join
+
+
+
+a := 1
+b := 2.0
+c := 0xFF
+d := 0b1010
+t := true
+f := false
+n := nil
+g := nan
+i := inf
+ni := -inf
+
+
+array := [1, "2", nil]
+2d_array := [[1, 2], [3, 4]] // variable name starts with a number
+array[-1] // last element (nil)
+array[0..2] // first two elements
+array[-2..-1] // last two elements
+array[0...2] // first three elements
+array += 1 // push
+array += 1, 2, 3 // push multiple
+array[;-1]? // pop last element and print it
+array[;]? // same as above
+array[;0]? // pop first element and print it
+array[;0...1]? // pop first two elements (as an array) and print them
+array[] // length 
+array[~0] = -1 // insert at index 0 (NOT REPLACE)
+
+"hello"[0] // first character
+"hello"[-1] // last character
+"hello"[0..2] // first two characters
+// etc...
+"hello"[]? // 5
+
+table := {x: 1, y: 2}
+table.x? // 1
+table.z = 3
+#table? // ["x", "y", "z"]
+##table? // [1, 2, 3]
+###table? // [["x", 1], ["y", 2], ["z", 3]]
+###talbe
+
+[1,2,3,4] * |x|x*2 // [2, 4, 6, 8] map
+[1,2,3,4] % |x|x%2==0 // [2, 4] filter
+[1,2,3,4] ^ |x|x%2==0 // 2 find
+[1,2,3,4] ^- |x|x%2==0 // 2 find last
+[1,2,3,4] ^^ |x|x%2==0 // 2 find index
+[1,2,3,4] ^^- |x|x%2==0 // 2 find last index
+[1,2,3,4] & |x|x%2==0 // false, test if all elements match
+[1,2,3,4] @ |a,b| b-a // [4, 3, 2, 1] sort
+[1,2,3,4] ~ |a,b| a+b // 10 reduce
+![1,2,3,4] // [4,3,2,1] reverse
+
+
+fn := |x, y| x + y
+fn(1, 2)?
+fn2 := |x, y| {
+    2x := x * 2
+    2y := y * 2
+    2x + 2y
+}
+fn2(1) // y will be nil
+
+
+a := 1
+b -> a
+b? // 1
+b := 2
+b? // 2
+a? // 2
+
+e := if a < b
+  a
+else {
+  x := a + b
+  x
+}
+
+e = map a {
+  2 => 200
+  3 => 300
+  _ => 0
+}
+
+while e > 100 {
+  e--
+}
+
+for i in 1..10 {
+  i? // 1, 2, 3, 4, 5, 6, 7, 8, 9
+}
+
+for e in [1,2,3,4] {
+  e? // 1, 2, 3, 4
+}
