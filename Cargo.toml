@@ -4,3 +4,31 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.93"
+clap = { version = "4.5.21", features = ["derive"] }
+clap_complete = "4.5.38"
+crossterm = "0.28.1"
+json = "0.12.4"
+lazy_static = "1.5.0"
+pest = "2.7.14"
+pest_derive = "2.7.14"
+rand = "0.8.5"
+regex = "1.11.1"
+serde = { version = "1.0.215", features = ["derive"] }
+serde_yml = "0.0.12"
+thiserror = "2.0.3"
+toml = "0.8.19"
+
+[profile.dev]
+# opt-level = 1
+
+[profile.dev.package."*"]
+strip = "symbols"
+codegen-units = 1
+opt-level = 3
+
+[profile.release]
+lto = true
+strip = "symbols"
+codegen-units = 1
+opt-level = "z"
