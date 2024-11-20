@@ -5,6 +5,13 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Program {
         pub statements: Vec<Statement>,
+        pub functions: Vec<Function>,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct Function {
+        pub name: String,
+        pub closure: NormalClosure,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -82,6 +89,7 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Block {
         pub statements: Vec<Statement>,
+        pub functions: Vec<Function>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -195,27 +203,67 @@ pub trait ParseSingle {
 impl ParseMulti for Program {
     fn parse(pairs: Pairs) -> Self {
         let mut statements = vec![];
+        let mut functions = vec![];
         for pair in pairs {
             match pair.as_rule() {
-                Rule::statement => statements.push(Statement::parse(pair.first_child())),
+                Rule::statement => {
+                    let pair = pair.first_child();
+                    match pair.as_rule() {
+                        Rule::function_definition => functions.push(Function::parse(pair.childs())),
+                        _ => statements.push(Statement::parse(pair)),
+                    }
+                }
+
                 Rule::EOI => (),
                 _ => unreachable!("{:#?}", pair),
             }
         }
-        Program { statements }
+        Program {
+            statements,
+            functions,
+        }
+    }
+}
+
+impl ParseMulti for Function {
+    fn parse(mut pairs: Pairs) -> Self {
+        let name = pairs.take_().as_str().to_string();
+        let arguments = pairs
+            .take_()
+            .childs()
+            .map(|p| p.as_str().to_string())
+            .collect();
+        let body = Expression::parse(pairs.take_().childs());
+        Function {
+            name,
+            closure: NormalClosure {
+                arguments,
+                body: Box::new(body),
+            },
+        }
     }
 }
 
 impl ParseMulti for Block {
     fn parse(pairs: Pairs) -> Self {
         let mut statements = vec![];
+        let mut functions = vec![];
         for pair in pairs {
             match pair.as_rule() {
-                Rule::statement => statements.push(Statement::parse(pair.first_child())),
+                Rule::statement => {
+                    let pair = pair.first_child();
+                    match pair.as_rule() {
+                        Rule::function_definition => functions.push(Function::parse(pair.childs())),
+                        _ => statements.push(Statement::parse(pair)),
+                    }
+                }
                 _ => unreachable!("{:#?}", pair),
             }
         }
-        Block { statements }
+        Block {
+            statements,
+            functions,
+        }
     }
 }
 

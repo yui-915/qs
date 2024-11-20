@@ -30,11 +30,11 @@ impl Runtime {
     }
 
     pub fn run(&mut self, program: Program) -> Value {
-        for statement in program.statements {
-            let value = statement.eval(&mut self.storage);
-            self.storage.set("_", value);
+        Block {
+            statements: program.statements,
+            functions: program.functions,
         }
-        self.storage.get("_")
+        .eval(&mut self.storage)
     }
 }
 
@@ -213,6 +213,12 @@ impl Evaluate for MapExpression {
 impl Evaluate for Block {
     fn eval(&self, storage: &mut Storage) -> Value {
         storage.push_scope();
+        for function in &self.functions {
+            storage.set(
+                &function.name,
+                Value::Closure(Closure::Normal(function.closure.clone())),
+            );
+        }
         for statement in &self.statements {
             let value = statement.eval(storage);
             storage.set("_", value);

@@ -1,66 +1,55 @@
 {
    "statements": [
       {
-         "Set": {
-            "identifier": "add",
-            "expression": {
-               "Value": {
-                  "Closure": {
-                     "Normal": {
-                        "arguments": [
-                           "x",
-                           "y"
-                        ],
-                        "body": {
-                           "Infixed": {
-                              "lhs": {
-                                 "Identifier": "x"
-                              },
-                              "infix": "Add",
-                              "rhs": {
-                                 "Identifier": "y"
-                              }
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "FunctionCall": {
+                     "name": "add",
+                     "arguments": [
+                        {
+                           "Value": {
+                              "Number": 1.0
+                           }
+                        },
+                        {
+                           "Value": {
+                              "Number": 2.0
                            }
                         }
-                     }
+                     ]
                   }
                }
             }
          }
-      },
+      }
+   ],
+   "functions": [
       {
-         "Expression": {
-            "FunctionCall": {
-               "name": "print",
-               "arguments": [
-                  {
-                     "FunctionCall": {
-                        "name": "add",
-                        "arguments": [
-                           {
-                              "Value": {
-                                 "Number": 1.0
-                              }
-                           },
-                           {
-                              "Value": {
-                                 "Number": 2.0
+         "name": "add",
+         "closure": {
+            "arguments": [
+               "a",
+               "b"
+            ],
+            "body": {
+               "Block": {
+                  "statements": [
+                     {
+                        "Expression": {
+                           "Infixed": {
+                              "lhs": {
+                                 "Identifier": "a"
+                              },
+                              "infix": "Add",
+                              "rhs": {
+                                 "Identifier": "b"
                               }
                            }
-                        ]
+                        }
                      }
-                  }
-               ]
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Value": {
-                     "String": "!!"
-                  }
+                  ],
+                  "functions": []
                }
             }
          }

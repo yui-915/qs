@@ -8,16 +8,18 @@ COMMENT = _{
 }
 
 statement = { 
-  if_statement | while_statement | for_statement |
+  if_statement | while_statement | for_statement | function_definition |
   define_and_set_statement | define_statement | set_statement |
   expression
 }
 block = { "{" ~ statements_stream ~ "}" }
 
 if_statement = { 
-  "if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE* ~
-  ("else if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE*)* ~
-  ("else" ~ NEWLINE* ~ statement)?
+  "if" ~ expression ~ NEWLINE* ~ statement ~ 
+  (NEWLINE* ~ "else if" ~ expression ~ NEWLINE* ~ statement)* ~
+  (NEWLINE* ~ "else" ~ NEWLINE* ~ statement)? |
+
+  "if" ~ expression ~ NEWLINE* ~ statement 
 }
 
 while_statement = { "while" ~ expression ~ NEWLINE* ~ statement }
@@ -26,6 +28,11 @@ for_statement = {
   statement ~ ";" ~ expression ~ ";" ~ statement ~ 
   ")" ~ NEWLINE* ~ statement
 }
+
+function_definition = {
+  "fn" ~ identifier ~ function_args ~ statement
+}
+function_args = { "(" ~ ")" | "(" ~ identifier ~ ("," ~ identifier)* ~ ","? ~ ")" }
 
 define_keyword = _{ "let" }
 set_statement = { identifier ~ "=" ~ expression }
@@ -59,7 +66,7 @@ expression = { fixed_primary ~ (infix ~ fixed_primary)* }
 primary = _{ function_call | map | value | identifier | block | "(" ~ expression ~ ")" }
 fixed_primary = _{ prefix? ~ primary ~ postfix? }
 
-function_call = { identifier ~ "(" ~ expression ~ ("," ~ expression)* ~ ")" }
+function_call = { identifier ~ ("(" ~ expression ~ ("," ~ expression)* ~ ")" | "(" ~ ")") }
 
 map = { 
   "map" ~ expression ~ NEWLINE* ~ "{" ~ NEWLINE+ ~ 

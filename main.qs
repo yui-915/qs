@@ -1,4 +1,5 @@
-add = |x, y| x + y
+add(1,2)?
 
-print(add(1,2))
-"!!"?
+fn add(a,b) {
+  a + b
+}
