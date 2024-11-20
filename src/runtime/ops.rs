@@ -44,15 +44,16 @@ pub fn eq(lhs: Value, rhs: Value) -> Value {
     use Value::*;
     match (lhs, rhs) {
         (Number(lhs), Number(rhs)) => Boolean(lhs == rhs),
+        (String(lhs), String(rhs)) => Boolean(lhs == rhs),
         _ => Nil,
     }
 }
 
 pub fn neq(lhs: Value, rhs: Value) -> Value {
     use Value::*;
-    match (lhs, rhs) {
-        (Number(lhs), Number(rhs)) => Boolean(lhs != rhs),
-        _ => Nil,
+    match eq(lhs, rhs) {
+        Boolean(value) => Boolean(!value),
+        _ => unreachable!(),
     }
 }
 
@@ -74,17 +75,17 @@ pub fn lt(lhs: Value, rhs: Value) -> Value {
 
 pub fn gte(lhs: Value, rhs: Value) -> Value {
     use Value::*;
-    match (lhs, rhs) {
-        (Number(lhs), Number(rhs)) => Boolean(lhs >= rhs),
-        _ => Nil,
+    match lt(lhs, rhs) {
+        Boolean(value) => Boolean(!value),
+        _ => unreachable!(),
     }
 }
 
 pub fn lte(lhs: Value, rhs: Value) -> Value {
     use Value::*;
-    match (lhs, rhs) {
-        (Number(lhs), Number(rhs)) => Boolean(lhs <= rhs),
-        _ => Nil,
+    match gt(lhs, rhs) {
+        Boolean(value) => Boolean(!value),
+        _ => unreachable!(),
     }
 }
 

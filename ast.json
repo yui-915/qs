@@ -4,19 +4,190 @@
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "FunctionCall": {
-                     "name": "add",
-                     "arguments": [
-                        {
-                           "Value": {
-                              "Number": 1.0
+                  "Value": {
+                     "String": "what operator do you wanna do"
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Value": {
+                     "String": "please choose one of the followig operators"
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "cout",
+               "arguments": [
+                  {
+                     "Value": {
+                        "String": "+, -, * or /: "
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Set": {
+            "identifier": "op",
+            "expression": {
+               "FunctionCall": {
+                  "name": "cin_char",
+                  "arguments": []
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "cout",
+               "arguments": [
+                  {
+                     "Value": {
+                        "String": "num 1 is: "
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Set": {
+            "identifier": "x",
+            "expression": {
+               "FunctionCall": {
+                  "name": "cin_number",
+                  "arguments": []
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "cout",
+               "arguments": [
+                  {
+                     "Value": {
+                        "String": "num 2 is: "
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Set": {
+            "identifier": "y",
+            "expression": {
+               "FunctionCall": {
+                  "name": "cin_number",
+                  "arguments": []
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Map": {
+                     "input": {
+                        "Identifier": "op"
+                     },
+                     "map": [
+                        [
+                           {
+                              "Value": {
+                                 "String": "+"
+                              }
+                           },
+                           {
+                              "Infixed": {
+                                 "lhs": {
+                                    "Identifier": "x"
+                                 },
+                                 "infix": "Add",
+                                 "rhs": {
+                                    "Identifier": "y"
+                                 }
+                              }
                            }
-                        },
-                        {
-                           "Value": {
-                              "Number": 2.0
+                        ],
+                        [
+                           {
+                              "Value": {
+                                 "String": "-"
+                              }
+                           },
+                           {
+                              "Infixed": {
+                                 "lhs": {
+                                    "Identifier": "x"
+                                 },
+                                 "infix": "Sub",
+                                 "rhs": {
+                                    "Identifier": "y"
+                                 }
+                              }
                            }
-                        }
+                        ],
+                        [
+                           {
+                              "Value": {
+                                 "String": "*"
+                              }
+                           },
+                           {
+                              "Infixed": {
+                                 "lhs": {
+                                    "Identifier": "x"
+                                 },
+                                 "infix": "Mul",
+                                 "rhs": {
+                                    "Identifier": "y"
+                                 }
+                              }
+                           }
+                        ],
+                        [
+                           {
+                              "Value": {
+                                 "String": "/"
+                              }
+                           },
+                           {
+                              "Infixed": {
+                                 "lhs": {
+                                    "Identifier": "x"
+                                 },
+                                 "infix": "Div",
+                                 "rhs": {
+                                    "Identifier": "y"
+                                 }
+                              }
+                           }
+                        ],
+                        [
+                           {
+                              "Identifier": "_"
+                           },
+                           {
+                              "Value": {
+                                 "String": "no"
+                              }
+                           }
+                        ]
                      ]
                   }
                }
@@ -24,35 +195,5 @@
          }
       }
    ],
-   "functions": [
-      {
-         "name": "add",
-         "closure": {
-            "arguments": [
-               "a",
-               "b"
-            ],
-            "body": {
-               "Block": {
-                  "statements": [
-                     {
-                        "Expression": {
-                           "Infixed": {
-                              "lhs": {
-                                 "Identifier": "a"
-                              },
-                              "infix": "Add",
-                              "rhs": {
-                                 "Identifier": "b"
-                              }
-                           }
-                        }
-                     }
-                  ],
-                  "functions": []
-               }
-            }
-         }
-      }
-   ]
+   "functions": []
 }

@@ -12,9 +12,27 @@ use std::{
 fn make_runtime() -> runtime::Runtime {
     let mut runtime = runtime::Runtime::new();
 
-    runtime.register_fn("print", |v: Vec<Value>| {
+    runtime.register_fn("cout", |v: Vec<Value>| {
         print!("{}", v.first().unwrap().fmt_print());
+        stdout().flush().unwrap();
         Value::Nil
+    });
+
+    runtime.register_fn("cin_number", |_: Vec<Value>| {
+        let mut input = String::new();
+        stdin().read_line(&mut input).unwrap();
+        let v = input.trim().parse::<f64>().unwrap();
+        Value::Number(v)
+    });
+
+    runtime.register_fn("cin_char", |_: Vec<Value>| {
+        let mut input = String::new();
+        stdin().read_line(&mut input).unwrap();
+        input
+            .trim()
+            .parse::<char>()
+            .map(|v| Value::String(v.to_string()))
+            .unwrap_or(Value::Nil)
     });
 
     runtime
