@@ -83,7 +83,7 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct MapExpression {
         pub input: Box<Expression>,
-        pub map: Vec<(Expression, Expression)>,
+        pub map: Vec<(Vec<Expression>, Expression)>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -157,6 +157,8 @@ pub mod nodes {
         Lt,
         Gte,
         Lte,
+        And,
+        Or,
     }
 }
 
@@ -375,9 +377,12 @@ impl ParseMulti for MapExpression {
         let input = Expression::parse(iter.take_().childs());
 
         while let Some(pair) = iter.next() {
-            let case = Expression::parse(pair.childs());
+            let mut cases = vec![];
+            for case in pair.childs() {
+                cases.push(Expression::parse(case.childs()));
+            }
             let value = Expression::parse(iter.take_().childs());
-            map.push((case, value));
+            map.push((cases, value));
         }
 
         MapExpression {
@@ -440,6 +445,8 @@ impl ParseMulti for Expression {
                         Rule::lt => Operator::Lt,
                         Rule::gte => Operator::Gte,
                         Rule::lte => Operator::Lte,
+                        Rule::and => Operator::And,
+                        Rule::or => Operator::Or,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),

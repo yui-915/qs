@@ -1,19 +1,27 @@
-"what operator do you wanna do"?
-"please choose one of the followig operators"?
-cout("+, -, * or /: ")
+"welcome yui's calculator"?
+"written in my own programming language!!"?
+""?
 
-op = cin_char()
+let op
+while op != "+" && op != "-" && op != "*" && op != "/" {
+  cout("please select one of (+ - * /): ")
+  op = cin_char()
+}
 
-cout("num 1 is: ")
-x = cin_number()
-
-cout("num 2 is: ")
-y = cin_number()
+x = read_num("1")
+y = read_num("2")
 
 map op {
   "+" => x + y
   "-" => x - y
   "*" => x * y
   "/" => x / y
-  _ => "no"
 }?
+
+fn read_num(n) {
+  let output
+  while output == nil {
+    cout("num " + n + " is: ")
+    output = cin_number()
+  }
+}

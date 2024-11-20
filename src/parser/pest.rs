@@ -24,6 +24,8 @@ lazy_static::lazy_static! {
         use Rule::*;
 
         PrattParser::new()
+            .op(Op::infix(or, Left))
+            .op(Op::infix(and, Left))
             .op(Op::infix(eq, Left) | Op::infix(neq, Left) |
                 Op::infix(lt, Left) | Op::infix(gt, Left) |
                 Op::infix(lte, Left) | Op::infix(gte, Left))

@@ -21,8 +21,11 @@ fn make_runtime() -> runtime::Runtime {
     runtime.register_fn("cin_number", |_: Vec<Value>| {
         let mut input = String::new();
         stdin().read_line(&mut input).unwrap();
-        let v = input.trim().parse::<f64>().unwrap();
-        Value::Number(v)
+        input
+            .trim()
+            .parse::<f64>()
+            .map(Value::Number)
+            .unwrap_or(Value::Nil)
     });
 
     runtime.register_fn("cin_char", |_: Vec<Value>| {

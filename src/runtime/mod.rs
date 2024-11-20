@@ -191,18 +191,20 @@ impl Evaluate for MapExpression {
         let input = self.input.eval(storage);
         let mut fallback = Value::Nil;
 
-        for (case, value) in &self.map {
-            if let Expression::Identifier(ident) = case {
-                if ident == "_" {
-                    fallback = value.eval(storage);
-                    continue;
+        for (cases, value) in &self.map {
+            for case in cases {
+                if let Expression::Identifier(ident) = case {
+                    if ident == "_" {
+                        fallback = value.eval(storage);
+                        continue;
+                    }
                 }
-            }
 
-            let case = case.eval(storage);
-            let eq = ops::eq(input.clone(), case);
-            if ops::as_bool(eq) {
-                return value.eval(storage);
+                let case = case.eval(storage);
+                let eq = ops::eq(input.clone(), case);
+                if ops::as_bool(eq) {
+                    return value.eval(storage);
+                }
             }
         }
 
@@ -244,6 +246,8 @@ impl Evaluate for Operation {
             Operator::Lt => ops::lt(lhs, rhs),
             Operator::Gte => ops::gte(lhs, rhs),
             Operator::Lte => ops::lte(lhs, rhs),
+            Operator::And => ops::and(lhs, rhs),
+            Operator::Or => ops::or(lhs, rhs),
         }
     }
 }

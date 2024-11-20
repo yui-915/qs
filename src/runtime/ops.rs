@@ -4,6 +4,7 @@ pub fn add(lhs: Value, rhs: Value) -> Value {
     use Value::*;
     match (lhs, rhs) {
         (Number(lhs), Number(rhs)) => Number(lhs + rhs),
+        (String(lhs), String(rhs)) => String(lhs + &rhs),
         _ => Nil,
     }
 }
@@ -45,7 +46,8 @@ pub fn eq(lhs: Value, rhs: Value) -> Value {
     match (lhs, rhs) {
         (Number(lhs), Number(rhs)) => Boolean(lhs == rhs),
         (String(lhs), String(rhs)) => Boolean(lhs == rhs),
-        _ => Nil,
+        (Nil, Nil) => Boolean(true),
+        _ => Boolean(false),
     }
 }
 
@@ -93,5 +95,21 @@ pub fn as_bool(value: Value) -> bool {
     match value {
         Value::Boolean(value) => value,
         _ => false,
+    }
+}
+
+pub fn and(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Boolean(lhs), Boolean(rhs)) => Boolean(lhs && rhs),
+        _ => Nil,
+    }
+}
+
+pub fn or(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Boolean(lhs), Boolean(rhs)) => Boolean(lhs || rhs),
+        _ => Nil,
     }
 }

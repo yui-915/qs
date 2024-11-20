@@ -70,10 +70,14 @@ function_call = { identifier ~ ("(" ~ expression ~ ("," ~ expression)* ~ ")" | "
 
 map = { 
   "map" ~ expression ~ NEWLINE* ~ "{" ~ NEWLINE+ ~ 
-  (expression ~ "=>" ~ expression ~ NEWLINE+)+ ~ "}" 
+  (map_cases ~ "=>" ~ expression ~ NEWLINE+)+ ~ "}" 
+}
+map_cases = {
+  expression ~ ("|" ~ expression)*
 }
 
 infix = _{ 
+  and | or |
   eq | neq | lte | gte | lt | gt | 
   add | sub | mul | div
 }
@@ -87,6 +91,8 @@ lt = { "<" }
 gt = { ">" }
 lte = { "<=" }
 gte = { ">=" }
+and = { "&&" }
+or = { "||" }
 
 prefix = _{ negate }
 negate = { "-" }

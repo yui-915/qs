@@ -5,7 +5,7 @@
             "Postfixed": {
                "Print": {
                   "Value": {
-                     "String": "what operator do you wanna do"
+                     "String": "welcome yui's calculator"
                   }
                }
             }
@@ -16,7 +16,7 @@
             "Postfixed": {
                "Print": {
                   "Value": {
-                     "String": "please choose one of the followig operators"
+                     "String": "written in my own programming language!!"
                   }
                }
             }
@@ -24,40 +24,122 @@
       },
       {
          "Expression": {
-            "FunctionCall": {
-               "name": "cout",
-               "arguments": [
-                  {
-                     "Value": {
-                        "String": "+, -, * or /: "
-                     }
+            "Postfixed": {
+               "Print": {
+                  "Value": {
+                     "String": ""
                   }
-               ]
+               }
             }
          }
       },
       {
-         "Set": {
-            "identifier": "op",
+         "Define": {
+            "identifier": "op"
+         }
+      },
+      {
+         "While": {
             "expression": {
-               "FunctionCall": {
-                  "name": "cin_char",
-                  "arguments": []
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "FunctionCall": {
-               "name": "cout",
-               "arguments": [
-                  {
-                     "Value": {
-                        "String": "num 1 is: "
+               "Infixed": {
+                  "lhs": {
+                     "Infixed": {
+                        "lhs": {
+                           "Infixed": {
+                              "lhs": {
+                                 "Infixed": {
+                                    "lhs": {
+                                       "Identifier": "op"
+                                    },
+                                    "infix": "Neq",
+                                    "rhs": {
+                                       "Value": {
+                                          "String": "+"
+                                       }
+                                    }
+                                 }
+                              },
+                              "infix": "And",
+                              "rhs": {
+                                 "Infixed": {
+                                    "lhs": {
+                                       "Identifier": "op"
+                                    },
+                                    "infix": "Neq",
+                                    "rhs": {
+                                       "Value": {
+                                          "String": "-"
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        },
+                        "infix": "And",
+                        "rhs": {
+                           "Infixed": {
+                              "lhs": {
+                                 "Identifier": "op"
+                              },
+                              "infix": "Neq",
+                              "rhs": {
+                                 "Value": {
+                                    "String": "*"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  },
+                  "infix": "And",
+                  "rhs": {
+                     "Infixed": {
+                        "lhs": {
+                           "Identifier": "op"
+                        },
+                        "infix": "Neq",
+                        "rhs": {
+                           "Value": {
+                              "String": "/"
+                           }
+                        }
                      }
                   }
-               ]
+               }
+            },
+            "statement": {
+               "Expression": {
+                  "Block": {
+                     "statements": [
+                        {
+                           "Expression": {
+                              "FunctionCall": {
+                                 "name": "cout",
+                                 "arguments": [
+                                    {
+                                       "Value": {
+                                          "String": "please select one of (+ - * /): "
+                                       }
+                                    }
+                                 ]
+                              }
+                           }
+                        },
+                        {
+                           "Set": {
+                              "identifier": "op",
+                              "expression": {
+                                 "FunctionCall": {
+                                    "name": "cin_char",
+                                    "arguments": []
+                                 }
+                              }
+                           }
+                        }
+                     ],
+                     "functions": []
+                  }
+               }
             }
          }
       },
@@ -66,23 +148,15 @@
             "identifier": "x",
             "expression": {
                "FunctionCall": {
-                  "name": "cin_number",
-                  "arguments": []
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "FunctionCall": {
-               "name": "cout",
-               "arguments": [
-                  {
-                     "Value": {
-                        "String": "num 2 is: "
+                  "name": "read_num",
+                  "arguments": [
+                     {
+                        "Value": {
+                           "String": "1"
+                        }
                      }
-                  }
-               ]
+                  ]
+               }
             }
          }
       },
@@ -91,8 +165,14 @@
             "identifier": "y",
             "expression": {
                "FunctionCall": {
-                  "name": "cin_number",
-                  "arguments": []
+                  "name": "read_num",
+                  "arguments": [
+                     {
+                        "Value": {
+                           "String": "2"
+                        }
+                     }
+                  ]
                }
             }
          }
@@ -107,11 +187,13 @@
                      },
                      "map": [
                         [
-                           {
-                              "Value": {
-                                 "String": "+"
+                           [
+                              {
+                                 "Value": {
+                                    "String": "+"
+                                 }
                               }
-                           },
+                           ],
                            {
                               "Infixed": {
                                  "lhs": {
@@ -125,11 +207,13 @@
                            }
                         ],
                         [
-                           {
-                              "Value": {
-                                 "String": "-"
+                           [
+                              {
+                                 "Value": {
+                                    "String": "-"
+                                 }
                               }
-                           },
+                           ],
                            {
                               "Infixed": {
                                  "lhs": {
@@ -143,11 +227,13 @@
                            }
                         ],
                         [
-                           {
-                              "Value": {
-                                 "String": "*"
+                           [
+                              {
+                                 "Value": {
+                                    "String": "*"
+                                 }
                               }
-                           },
+                           ],
                            {
                               "Infixed": {
                                  "lhs": {
@@ -161,11 +247,13 @@
                            }
                         ],
                         [
-                           {
-                              "Value": {
-                                 "String": "/"
+                           [
+                              {
+                                 "Value": {
+                                    "String": "/"
+                                 }
                               }
-                           },
+                           ],
                            {
                               "Infixed": {
                                  "lhs": {
@@ -177,16 +265,6 @@
                                  }
                               }
                            }
-                        ],
-                        [
-                           {
-                              "Identifier": "_"
-                           },
-                           {
-                              "Value": {
-                                 "String": "no"
-                              }
-                           }
                         ]
                      ]
                   }
@@ -195,5 +273,93 @@
          }
       }
    ],
-   "functions": []
+   "functions": [
+      {
+         "name": "read_num",
+         "closure": {
+            "arguments": [
+               "n"
+            ],
+            "body": {
+               "Block": {
+                  "statements": [
+                     {
+                        "Define": {
+                           "identifier": "output"
+                        }
+                     },
+                     {
+                        "While": {
+                           "expression": {
+                              "Infixed": {
+                                 "lhs": {
+                                    "Identifier": "output"
+                                 },
+                                 "infix": "Eq",
+                                 "rhs": {
+                                    "Value": "Nil"
+                                 }
+                              }
+                           },
+                           "statement": {
+                              "Expression": {
+                                 "Block": {
+                                    "statements": [
+                                       {
+                                          "Expression": {
+                                             "FunctionCall": {
+                                                "name": "cout",
+                                                "arguments": [
+                                                   {
+                                                      "Infixed": {
+                                                         "lhs": {
+                                                            "Infixed": {
+                                                               "lhs": {
+                                                                  "Value": {
+                                                                     "String": "num "
+                                                                  }
+                                                               },
+                                                               "infix": "Add",
+                                                               "rhs": {
+                                                                  "Identifier": "n"
+                                                               }
+                                                            }
+                                                         },
+                                                         "infix": "Add",
+                                                         "rhs": {
+                                                            "Value": {
+                                                               "String": " is: "
+                                                            }
+                                                         }
+                                                      }
+                                                   }
+                                                ]
+                                             }
+                                          }
+                                       },
+                                       {
+                                          "Set": {
+                                             "identifier": "output",
+                                             "expression": {
+                                                "FunctionCall": {
+                                                   "name": "cin_number",
+                                                   "arguments": []
+                                                }
+                                             }
+                                          }
+                                       }
+                                    ],
+                                    "functions": []
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  ],
+                  "functions": []
+               }
+            }
+         }
+      }
+   ]
 }
