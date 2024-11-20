@@ -2,19 +2,32 @@ mod cli;
 mod parser;
 mod runtime;
 
+use parser::Value;
 use runtime::Printable;
 use std::{
     fs::read_to_string,
     io::{stdin, stdout, Write},
 };
 
+fn make_runtime() -> runtime::Runtime {
+    let mut runtime = runtime::Runtime::new();
+
+    runtime.register_fn("print", |v: Vec<Value>| {
+        print!("{}", v.first().unwrap().fmt_print());
+        Value::Nil
+    });
+
+    runtime
+}
+
 fn main() {
     let cli = cli::parse();
-    let mut runtime = runtime::Runtime::new();
+    let mut runtime = make_runtime();
 
     if let Some(file) = &cli.file {
         let src = read_to_string(file).unwrap();
         let prog = parser::parse(&src);
+        #[cfg(debug_assertions)]
         output_ast(&prog);
         runtime.run(prog);
     } else {
@@ -30,6 +43,7 @@ fn main() {
     }
 }
 
+#[cfg(debug_assertions)]
 fn output_ast(ast: &parser::Program) {
     let json = serde_json::to_string_pretty(&ast).unwrap();
     let mut cmd = std::process::Command::new("jq")

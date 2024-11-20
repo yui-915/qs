@@ -1,6 +1,6 @@
 pub mod nodes {
     #![allow(unused)]
-    use serde::Serialize;
+    use serde::{ser::SerializeMap, Serialize, Serializer};
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct Program {
@@ -64,6 +64,13 @@ pub mod nodes {
         Identifier(String),
         Block(Block),
         Map(MapExpression),
+        FunctionCall(FunctionCall),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct FunctionCall {
+        pub name: String,
+        pub arguments: Vec<Expression>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -79,10 +86,37 @@ pub mod nodes {
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum Value {
+        Closure(Closure),
         Number(f64),
         String(String),
         Boolean(bool),
         Nil,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub enum Closure {
+        Normal(NormalClosure),
+        Native(NativeClosure),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct NormalClosure {
+        pub arguments: Vec<String>,
+        pub body: Box<Expression>,
+    }
+
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct NativeClosure {
+        pub function: fn(Vec<Value>) -> Value,
+    }
+
+    impl Serialize for NativeClosure {
+        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+        {
+            serializer.serialize_str(&format!("NativeClosure"))
+        }
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -240,7 +274,7 @@ impl ParseMulti for IfStatement {
             match pair.as_rule() {
                 Rule::expression => {
                     let expression = Expression::parse(pair.childs());
-                    let statement = Statement::parse(iter.next().unwrap().first_child());
+                    let statement = Statement::parse(iter.take_().first_child());
                     conditionals.push((expression, statement));
                 }
                 Rule::statement => {
@@ -305,6 +339,31 @@ impl ParseMulti for MapExpression {
     }
 }
 
+impl ParseMulti for Closure {
+    fn parse(mut pairs: Pairs) -> Self {
+        let args = pairs
+            .take_()
+            .childs()
+            .map(|a| a.as_str().to_string())
+            .collect();
+        let body = Expression::parse(pairs.take_().childs());
+
+        Closure::Normal(NormalClosure {
+            arguments: args,
+            body: Box::new(body),
+        })
+    }
+}
+
+impl ParseMulti for FunctionCall {
+    fn parse(mut pairs: Pairs) -> Self {
+        let name = pairs.take_().as_str().to_string();
+        let arguments = pairs.map(|pair| Expression::parse(pair.childs())).collect();
+
+        FunctionCall { name, arguments }
+    }
+}
+
 impl ParseMulti for Expression {
     fn parse(pairs: Pairs) -> Self {
         PRATT_PARSER
@@ -314,6 +373,9 @@ impl ParseMulti for Expression {
                 Rule::identifier => Expression::Identifier(primary.as_str().to_string()),
                 Rule::block => Expression::Block(Block::parse(primary.childs())),
                 Rule::map => Expression::Map(MapExpression::parse(primary.childs())),
+                Rule::function_call => {
+                    Expression::FunctionCall(FunctionCall::parse(primary.childs()))
+                }
                 _ => unreachable!("{:#?}", primary),
             })
             .map_infix(|lhs, op, rhs| {
@@ -351,6 +413,7 @@ impl ParseMulti for Expression {
 impl ParseSingle for Value {
     fn parse(pair: Pair) -> Self {
         match pair.as_rule() {
+            Rule::closure => Value::Closure(Closure::parse(pair.childs())),
             Rule::number => Value::Number(pair.as_str().parse().unwrap()),
             Rule::string => {
                 let str = pair.as_str();

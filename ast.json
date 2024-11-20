@@ -1,94 +1,65 @@
 {
    "statements": [
       {
-         "For": {
-            "initializer": {
-               "Set": {
-                  "identifier": "x",
-                  "expression": {
-                     "Value": {
-                        "Number": 0.0
-                     }
-                  }
-               }
-            },
-            "condition": {
-               "Infixed": {
-                  "lhs": {
-                     "Identifier": "x"
-                  },
-                  "infix": "Lt",
-                  "rhs": {
-                     "Value": {
-                        "Number": 10.0
-                     }
-                  }
-               }
-            },
-            "increment": {
-               "Set": {
-                  "identifier": "x",
-                  "expression": {
-                     "Infixed": {
-                        "lhs": {
-                           "Identifier": "x"
-                        },
-                        "infix": "Add",
-                        "rhs": {
-                           "Value": {
-                              "Number": 1.0
+         "Set": {
+            "identifier": "add",
+            "expression": {
+               "Value": {
+                  "Closure": {
+                     "Normal": {
+                        "arguments": [
+                           "x",
+                           "y"
+                        ],
+                        "body": {
+                           "Infixed": {
+                              "lhs": {
+                                 "Identifier": "x"
+                              },
+                              "infix": "Add",
+                              "rhs": {
+                                 "Identifier": "y"
+                              }
                            }
                         }
                      }
                   }
                }
-            },
-            "statement": {
-               "Expression": {
-                  "Postfixed": {
-                     "Print": {
-                        "Map": {
-                           "input": {
-                              "Identifier": "x"
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "print",
+               "arguments": [
+                  {
+                     "FunctionCall": {
+                        "name": "add",
+                        "arguments": [
+                           {
+                              "Value": {
+                                 "Number": 1.0
+                              }
                            },
-                           "map": [
-                              [
-                                 {
-                                    "Value": {
-                                       "Number": 4.0
-                                    }
-                                 },
-                                 {
-                                    "Value": {
-                                       "Number": 420.0
-                                    }
-                                 }
-                              ],
-                              [
-                                 {
-                                    "Value": {
-                                       "Number": 6.0
-                                    }
-                                 },
-                                 {
-                                    "Value": {
-                                       "Number": 69.0
-                                    }
-                                 }
-                              ],
-                              [
-                                 {
-                                    "Identifier": "_"
-                                 },
-                                 {
-                                    "Value": {
-                                       "String": ":("
-                                    }
-                                 }
-                              ]
-                           ]
-                        }
+                           {
+                              "Value": {
+                                 "Number": 2.0
+                              }
+                           }
+                        ]
                      }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Value": {
+                     "String": "!!"
                   }
                }
             }

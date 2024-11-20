@@ -14,15 +14,16 @@ impl Printable for Value {
             Value::String(value) => value.to_string(),
             Value::Boolean(value) => value.to_string(),
             Value::Nil => "nil".to_string(),
+            Value::Closure(closure) => match closure {
+                Closure::Normal(normal_closure) => {
+                    format!("|{}| {{ ... }}", normal_closure.arguments.join(", "))
+                }
+                Closure::Native(native_closure) => "|...| { NativeCode }".to_string(),
+            },
         }
     }
 
     fn fmt_debug(&self) -> String {
-        match self {
-            Value::Number(value) => value.to_string(),
-            Value::String(value) => format!("\"{}\"", value),
-            Value::Boolean(value) => value.to_string(),
-            Value::Nil => "nil".to_string(),
-        }
+        self.fmt_print()
     }
 }

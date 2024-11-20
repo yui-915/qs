@@ -19,6 +19,16 @@ impl Runtime {
         }
     }
 
+    pub fn register_fn<S>(&mut self, name: S, func: fn(Vec: Vec<Value>) -> Value)
+    where
+        S: AsRef<str>,
+    {
+        self.storage.global_scope_mut().set(
+            name,
+            Value::Closure(Closure::Native(NativeClosure { function: func })),
+        )
+    }
+
     pub fn run(&mut self, program: Program) -> Value {
         for statement in program.statements {
             let value = statement.eval(&mut self.storage);
@@ -142,6 +152,36 @@ impl Evaluate for Expression {
             Expression::Identifier(identifier) => storage.get(identifier),
             Expression::Block(block) => block.eval(storage),
             Expression::Map(map) => map.eval(storage),
+            Expression::FunctionCall(call) => call.eval(storage),
+        }
+    }
+}
+
+impl Evaluate for FunctionCall {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        if let Some(func) = storage.get_optional(&self.name) {
+            match func {
+                Value::Closure(func) => {
+                    let args = self
+                        .arguments
+                        .iter()
+                        .map(|arg| arg.eval(storage))
+                        .collect::<Vec<_>>();
+                    match func {
+                        Closure::Normal(closure) => {
+                            storage.push_scope();
+                            for (name, value) in closure.arguments.iter().zip(args.iter()) {
+                                storage.set(name, value.clone());
+                            }
+                            closure.body.eval(storage)
+                        }
+                        Closure::Native(closure) => (closure.function)(args),
+                    }
+                }
+                _ => Value::Nil,
+            }
+        } else {
+            Value::Nil
         }
     }
 }
