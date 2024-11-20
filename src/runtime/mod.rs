@@ -58,6 +58,9 @@ impl Evaluate for Operation {
         let rhs = self.rhs.eval(storage);
         match self.infix {
             Operator::Add => ops::add(lhs, rhs),
+            Operator::Sub => ops::sub(lhs, rhs),
+            Operator::Mul => ops::mul(lhs, rhs),
+            Operator::Div => ops::div(lhs, rhs),
         }
     }
 }

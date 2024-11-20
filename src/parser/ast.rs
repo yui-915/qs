@@ -50,6 +50,9 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum Operator {
         Add,
+        Sub,
+        Mul,
+        Div,
     }
 }
 
@@ -130,6 +133,9 @@ impl ParseMulti for Expression {
                     lhs: Box::new(lhs),
                     infix: match op.as_rule() {
                         Rule::add => Operator::Add,
+                        Rule::sub => Operator::Sub,
+                        Rule::mul => Operator::Mul,
+                        Rule::div => Operator::Div,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),

@@ -15,3 +15,27 @@ pub fn negate(value: Value) -> Value {
         _ => Nil,
     }
 }
+
+pub fn sub(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Number(lhs), Number(rhs)) => Number(lhs - rhs),
+        _ => Nil,
+    }
+}
+
+pub fn mul(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Number(lhs), Number(rhs)) => Number(lhs * rhs),
+        _ => Nil,
+    }
+}
+
+pub fn div(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Number(lhs), Number(rhs)) => Number(lhs / rhs),
+        _ => Nil,
+    }
+}

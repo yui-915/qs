@@ -29,8 +29,11 @@ expression = { fixed_primary ~ (infix ~ fixed_primary)* }
 primary = _{ value | identifier | "(" ~ expression ~ ")" }
 fixed_primary = _{ prefix? ~ primary ~ postfix? }
 
-infix = _{ add }
+infix = _{ add | sub | mul | div }
 add = { "+" }
+sub = { "-" }
+mul = { "*" }
+div = { "/" }
 
 prefix = _{ negate }
 negate = { "-" }

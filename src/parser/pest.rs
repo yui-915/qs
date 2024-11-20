@@ -25,9 +25,8 @@ lazy_static::lazy_static! {
 
         PrattParser::new()
             .op(Op::postfix(debug) | Op::postfix(print))
-            .op(Op::infix(add, Left))
-            // .op(Op::infix(add, Left) | Op::infix(sub, Left))
-            // .op(Op::infix(mul, Left) | Op::infix(div, Left))
+            .op(Op::infix(add, Left) | Op::infix(sub, Left))
+            .op(Op::infix(mul, Left) | Op::infix(div, Left))
             .op(Op::prefix(negate))
     };
 }
