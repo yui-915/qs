@@ -1,8 +1,10 @@
-x = 6
+x = 0
 
-if x <= 5
-  "hello" ?
-else if x >= 7
-  "world" ?
-else
-  "!" ?
+while x < 10 {
+  map x {
+    4 => 420
+    6 => 69
+    _ => ":("
+  }?
+  x = x + 1
+}

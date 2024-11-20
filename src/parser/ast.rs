@@ -14,12 +14,19 @@ pub mod nodes {
         Define(DefineStatement),
         DefineAndSet(DefineAndSetStatement),
         If(IfStatement),
+        While(WhileStatement),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct IfStatement {
         pub conditionals: Vec<(Expression, Statement)>,
         pub otherwise: Option<Box<Statement>>,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct WhileStatement {
+        pub expression: Expression,
+        pub statement: Box<Statement>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -47,6 +54,13 @@ pub mod nodes {
         Postfixed(PostfixedExpression),
         Identifier(String),
         Block(Block),
+        Map(MapExpression),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct MapExpression {
+        pub input: Box<Expression>,
+        pub map: Vec<(Expression, Expression)>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -172,7 +186,20 @@ impl ParseSingle for Statement {
                 Statement::DefineAndSet(DefineAndSetStatement::parse(pair.childs()))
             }
             Rule::if_statement => Statement::If(IfStatement::parse(pair.childs())),
+            Rule::while_statement => Statement::While(WhileStatement::parse(pair.childs())),
             _ => unreachable!("{:#?}", pair),
+        }
+    }
+}
+
+impl ParseMulti for WhileStatement {
+    fn parse(mut pairs: Pairs) -> Self {
+        let expression = Expression::parse(pairs.take_().childs());
+        let statement = Statement::parse(pairs.take_().first_child());
+
+        WhileStatement {
+            expression,
+            statement: Box::new(statement),
         }
     }
 }
@@ -233,6 +260,25 @@ impl ParseMulti for SetStatement {
     }
 }
 
+impl ParseMulti for MapExpression {
+    fn parse(pairs: Pairs) -> Self {
+        let mut iter = pairs.into_iter();
+        let mut map = vec![];
+        let input = Expression::parse(iter.take_().childs());
+
+        while let Some(pair) = iter.next() {
+            let case = Expression::parse(pair.childs());
+            let value = Expression::parse(iter.take_().childs());
+            map.push((case, value));
+        }
+
+        MapExpression {
+            input: Box::new(input),
+            map,
+        }
+    }
+}
+
 impl ParseMulti for Expression {
     fn parse(pairs: Pairs) -> Self {
         PRATT_PARSER
@@ -241,6 +287,7 @@ impl ParseMulti for Expression {
                 Rule::expression => Expression::parse(primary.childs()),
                 Rule::identifier => Expression::Identifier(primary.as_str().to_string()),
                 Rule::block => Expression::Block(Block::parse(primary.childs())),
+                Rule::map => Expression::Map(MapExpression::parse(primary.childs())),
                 _ => unreachable!("{:#?}", primary),
             })
             .map_infix(|lhs, op, rhs| {

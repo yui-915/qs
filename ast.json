@@ -5,75 +5,98 @@
             "identifier": "x",
             "expression": {
                "Value": {
-                  "Number": 6.0
+                  "Number": 0.0
                }
             }
          }
       },
       {
-         "If": {
-            "conditionals": [
-               [
-                  {
-                     "Infixed": {
-                        "lhs": {
-                           "Identifier": "x"
-                        },
-                        "infix": "Lte",
-                        "rhs": {
-                           "Value": {
-                              "Number": 5.0
-                           }
-                        }
-                     }
+         "While": {
+            "expression": {
+               "Infixed": {
+                  "lhs": {
+                     "Identifier": "x"
                   },
-                  {
-                     "Expression": {
-                        "Postfixed": {
-                           "Print": {
-                              "Value": {
-                                 "String": "hello"
-                              }
-                           }
-                        }
+                  "infix": "Lt",
+                  "rhs": {
+                     "Value": {
+                        "Number": 10.0
                      }
                   }
-               ],
-               [
-                  {
-                     "Infixed": {
-                        "lhs": {
-                           "Identifier": "x"
-                        },
-                        "infix": "Gte",
-                        "rhs": {
-                           "Value": {
-                              "Number": 7.0
-                           }
-                        }
-                     }
-                  },
-                  {
-                     "Expression": {
-                        "Postfixed": {
-                           "Print": {
-                              "Value": {
-                                 "String": "world"
-                              }
-                           }
-                        }
-                     }
-                  }
-               ]
-            ],
-            "otherwise": {
+               }
+            },
+            "statement": {
                "Expression": {
-                  "Postfixed": {
-                     "Print": {
-                        "Value": {
-                           "String": "!"
+                  "Block": {
+                     "statements": [
+                        {
+                           "Expression": {
+                              "Postfixed": {
+                                 "Print": {
+                                    "Map": {
+                                       "input": {
+                                          "Identifier": "x"
+                                       },
+                                       "map": [
+                                          [
+                                             {
+                                                "Value": {
+                                                   "Number": 4.0
+                                                }
+                                             },
+                                             {
+                                                "Value": {
+                                                   "Number": 420.0
+                                                }
+                                             }
+                                          ],
+                                          [
+                                             {
+                                                "Value": {
+                                                   "Number": 6.0
+                                                }
+                                             },
+                                             {
+                                                "Value": {
+                                                   "Number": 69.0
+                                                }
+                                             }
+                                          ],
+                                          [
+                                             {
+                                                "Identifier": "_"
+                                             },
+                                             {
+                                                "Value": {
+                                                   "String": ":("
+                                                }
+                                             }
+                                          ]
+                                       ]
+                                    }
+                                 }
+                              }
+                           }
+                        },
+                        {
+                           "Set": {
+                              "identifier": "x",
+                              "expression": {
+                                 "Infixed": {
+                                    "lhs": {
+                                       "Identifier": "x"
+                                    },
+                                    "infix": "Add",
+                                    "rhs": {
+                                       "Value": {
+                                          "Number": 1.0
+                                       }
+                                    }
+                                 }
+                              }
+                           }
                         }
-                     }
+                     ]
                   }
                }
             }

@@ -40,12 +40,30 @@ impl Evaluate for Statement {
             Statement::Define(define) => define.eval(storage),
             Statement::DefineAndSet(define_and_set) => define_and_set.eval(storage),
             Statement::If(if_statement) => if_statement.eval(storage),
+            Statement::While(while_statement) => while_statement.eval(storage),
         }
+    }
+}
+
+impl Evaluate for WhileStatement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        storage.push_scope();
+        let mut value = Value::Nil;
+        loop {
+            let cond = self.expression.eval(storage);
+            if !ops::as_bool(cond) {
+                break;
+            }
+            value = self.statement.eval(storage);
+        }
+        storage.pop_scope();
+        value
     }
 }
 
 impl Evaluate for IfStatement {
     fn eval(&self, storage: &mut Storage) -> Value {
+        storage.push_scope();
         let mut value = None;
         for (condition, statement) in &self.conditionals {
             let cond = condition.eval(storage);
@@ -55,6 +73,7 @@ impl Evaluate for IfStatement {
             }
         }
 
+        storage.pop_scope();
         value.unwrap_or_else(|| {
             if let Some(statement) = &self.otherwise {
                 statement.eval(storage)
@@ -103,7 +122,22 @@ impl Evaluate for Expression {
             Expression::Postfixed(postfixed) => postfixed.eval(storage),
             Expression::Identifier(identifier) => storage.get(identifier),
             Expression::Block(block) => block.eval(storage),
+            Expression::Map(map) => map.eval(storage),
         }
+    }
+}
+
+impl Evaluate for MapExpression {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        let input = self.input.eval(storage);
+        for (case, value) in &self.map {
+            let case = case.eval(storage);
+            let eq = ops::eq(input.clone(), case);
+            if ops::as_bool(eq) {
+                return value.eval(storage);
+            }
+        }
+        Value::Nil
     }
 }
 

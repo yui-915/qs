@@ -8,16 +8,18 @@ COMMENT = _{
 }
 
 statement = { 
-  if_statement |
+  if_statement | while_statement |
   define_and_set_statement | define_statement | set_statement |
   expression
 }
 block = { "{" ~ statements_stream ~ "}" }
+
 if_statement = { 
   "if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE* ~
   ("else if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE*)* ~
   ("else" ~ NEWLINE* ~ statement)?
 }
+while_statement = { "while" ~ expression ~ NEWLINE* ~ statement }
 
 define_keyword = _{ "let" }
 set_statement = { identifier ~ "=" ~ expression }
@@ -45,8 +47,13 @@ nil = { "nil" }
 value = { number | string | boolean | nil }
 
 expression = { fixed_primary ~ (infix ~ fixed_primary)* }
-primary = _{ value | identifier | block | "(" ~ expression ~ ")" }
+primary = _{ map | value | identifier | block | "(" ~ expression ~ ")" }
 fixed_primary = _{ prefix? ~ primary ~ postfix? }
+
+map = { 
+  "map" ~ expression ~ NEWLINE* ~ "{" ~ NEWLINE+ ~ 
+  (expression ~ "=>" ~ expression ~ NEWLINE+)+ ~ "}" 
+}
 
 infix = _{ 
   eq | neq | lte | gte | lt | gt | 
