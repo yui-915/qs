@@ -41,7 +41,26 @@ impl Evaluate for Statement {
             Statement::DefineAndSet(define_and_set) => define_and_set.eval(storage),
             Statement::If(if_statement) => if_statement.eval(storage),
             Statement::While(while_statement) => while_statement.eval(storage),
+            Statement::For(for_statement) => for_statement.eval(storage),
         }
+    }
+}
+
+impl Evaluate for ForStatement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        storage.push_scope();
+        self.initializer.eval(storage);
+        loop {
+            let cond = self.condition.eval(storage);
+            if !ops::as_bool(cond) {
+                break;
+            }
+            // maybe clear _ ?
+            self.statement.eval(storage);
+            self.increment.eval(storage);
+        }
+        storage.pop_scope();
+        Value::Nil // TODO: return break value
     }
 }
 
@@ -130,14 +149,24 @@ impl Evaluate for Expression {
 impl Evaluate for MapExpression {
     fn eval(&self, storage: &mut Storage) -> Value {
         let input = self.input.eval(storage);
+        let mut fallback = Value::Nil;
+
         for (case, value) in &self.map {
+            if let Expression::Identifier(ident) = case {
+                if ident == "_" {
+                    fallback = value.eval(storage);
+                    continue;
+                }
+            }
+
             let case = case.eval(storage);
             let eq = ops::eq(input.clone(), case);
             if ops::as_bool(eq) {
                 return value.eval(storage);
             }
         }
-        Value::Nil
+
+        fallback
     }
 }
 

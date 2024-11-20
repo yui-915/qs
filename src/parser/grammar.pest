@@ -8,7 +8,7 @@ COMMENT = _{
 }
 
 statement = { 
-  if_statement | while_statement |
+  if_statement | while_statement | for_statement |
   define_and_set_statement | define_statement | set_statement |
   expression
 }
@@ -19,7 +19,13 @@ if_statement = {
   ("else if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE*)* ~
   ("else" ~ NEWLINE* ~ statement)?
 }
+
 while_statement = { "while" ~ expression ~ NEWLINE* ~ statement }
+for_statement = { 
+  "for" ~ "(" ~
+  statement ~ ";" ~ expression ~ ";" ~ statement ~ 
+  ")" ~ NEWLINE* ~ statement
+}
 
 define_keyword = _{ "let" }
 set_statement = { identifier ~ "=" ~ expression }

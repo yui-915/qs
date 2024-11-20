@@ -1,18 +1,18 @@
 {
    "statements": [
       {
-         "Set": {
-            "identifier": "x",
-            "expression": {
-               "Value": {
-                  "Number": 0.0
+         "For": {
+            "initializer": {
+               "Set": {
+                  "identifier": "x",
+                  "expression": {
+                     "Value": {
+                        "Number": 0.0
+                     }
+                  }
                }
-            }
-         }
-      },
-      {
-         "While": {
-            "expression": {
+            },
+            "condition": {
                "Infixed": {
                   "lhs": {
                      "Identifier": "x"
@@ -25,78 +25,70 @@
                   }
                }
             },
-            "statement": {
-               "Expression": {
-                  "Block": {
-                     "statements": [
-                        {
-                           "Expression": {
-                              "Postfixed": {
-                                 "Print": {
-                                    "Map": {
-                                       "input": {
-                                          "Identifier": "x"
-                                       },
-                                       "map": [
-                                          [
-                                             {
-                                                "Value": {
-                                                   "Number": 4.0
-                                                }
-                                             },
-                                             {
-                                                "Value": {
-                                                   "Number": 420.0
-                                                }
-                                             }
-                                          ],
-                                          [
-                                             {
-                                                "Value": {
-                                                   "Number": 6.0
-                                                }
-                                             },
-                                             {
-                                                "Value": {
-                                                   "Number": 69.0
-                                                }
-                                             }
-                                          ],
-                                          [
-                                             {
-                                                "Identifier": "_"
-                                             },
-                                             {
-                                                "Value": {
-                                                   "String": ":("
-                                                }
-                                             }
-                                          ]
-                                       ]
-                                    }
-                                 }
-                              }
-                           }
+            "increment": {
+               "Set": {
+                  "identifier": "x",
+                  "expression": {
+                     "Infixed": {
+                        "lhs": {
+                           "Identifier": "x"
                         },
-                        {
-                           "Set": {
-                              "identifier": "x",
-                              "expression": {
-                                 "Infixed": {
-                                    "lhs": {
-                                       "Identifier": "x"
-                                    },
-                                    "infix": "Add",
-                                    "rhs": {
-                                       "Value": {
-                                          "Number": 1.0
-                                       }
-                                    }
-                                 }
-                              }
+                        "infix": "Add",
+                        "rhs": {
+                           "Value": {
+                              "Number": 1.0
                            }
                         }
-                     ]
+                     }
+                  }
+               }
+            },
+            "statement": {
+               "Expression": {
+                  "Postfixed": {
+                     "Print": {
+                        "Map": {
+                           "input": {
+                              "Identifier": "x"
+                           },
+                           "map": [
+                              [
+                                 {
+                                    "Value": {
+                                       "Number": 4.0
+                                    }
+                                 },
+                                 {
+                                    "Value": {
+                                       "Number": 420.0
+                                    }
+                                 }
+                              ],
+                              [
+                                 {
+                                    "Value": {
+                                       "Number": 6.0
+                                    }
+                                 },
+                                 {
+                                    "Value": {
+                                       "Number": 69.0
+                                    }
+                                 }
+                              ],
+                              [
+                                 {
+                                    "Identifier": "_"
+                                 },
+                                 {
+                                    "Value": {
+                                       "String": ":("
+                                    }
+                                 }
+                              ]
+                           ]
+                        }
+                     }
                   }
                }
             }

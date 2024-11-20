@@ -15,6 +15,15 @@ pub mod nodes {
         DefineAndSet(DefineAndSetStatement),
         If(IfStatement),
         While(WhileStatement),
+        For(ForStatement),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct ForStatement {
+        pub initializer: Box<Statement>,
+        pub condition: Expression,
+        pub increment: Box<Statement>,
+        pub statement: Box<Statement>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -187,7 +196,24 @@ impl ParseSingle for Statement {
             }
             Rule::if_statement => Statement::If(IfStatement::parse(pair.childs())),
             Rule::while_statement => Statement::While(WhileStatement::parse(pair.childs())),
+            Rule::for_statement => Statement::For(ForStatement::parse(pair.childs())),
             _ => unreachable!("{:#?}", pair),
+        }
+    }
+}
+
+impl ParseMulti for ForStatement {
+    fn parse(mut pairs: Pairs) -> Self {
+        let initializer = Statement::parse(pairs.take_().first_child());
+        let condition = Expression::parse(pairs.take_().childs());
+        let increment = Statement::parse(pairs.take_().first_child());
+        let statement = Statement::parse(pairs.take_().first_child());
+
+        ForStatement {
+            initializer: Box::new(initializer),
+            condition,
+            increment: Box::new(increment),
+            statement: Box::new(statement),
         }
     }
 }
