@@ -24,9 +24,12 @@ lazy_static::lazy_static! {
         use Rule::*;
 
         PrattParser::new()
-            .op(Op::postfix(debug) | Op::postfix(print))
+            .op(Op::infix(eq, Left) | Op::infix(neq, Left) |
+                Op::infix(lt, Left) | Op::infix(gt, Left) |
+                Op::infix(lte, Left) | Op::infix(gte, Left))
             .op(Op::infix(add, Left) | Op::infix(sub, Left))
             .op(Op::infix(mul, Left) | Op::infix(div, Left))
+            .op(Op::postfix(debug) | Op::postfix(print))
             .op(Op::prefix(negate))
     };
 }

@@ -1,4 +1,5 @@
-program = _{ SOI ~ NEWLINE* ~ (statement ~ NEWLINE+)* ~ NEWLINE* ~ EOI }
+program = _{ SOI ~ statements_stream ~ EOI }
+statements_stream = _{ NEWLINE* ~ (statement ~ NEWLINE+)* ~ NEWLINE* }
 
 WHITESPACE = _{ " " | "\t" }
 COMMENT = _{ 
@@ -6,7 +7,25 @@ COMMENT = _{
   | "/*" ~ (!"*/" ~ ANY)* ~ "*/"
 }
 
-statement = { expression }
+statement = { 
+  if_statement |
+  define_and_set_statement | define_statement | set_statement |
+  expression
+}
+block = { "{" ~ statements_stream ~ "}" }
+if_statement = { 
+  "if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE* ~
+  ("else if" ~ expression ~ NEWLINE* ~ statement ~ NEWLINE*)* ~
+  ("else" ~ NEWLINE* ~ statement)?
+}
+
+define_keyword = _{ "let" }
+set_statement = { identifier ~ "=" ~ expression }
+define_statement = { define_keyword ~ identifier }
+define_and_set_statement = { 
+  define_keyword ~ identifier ~ "=" ~ expression | 
+  identifier ~ ":=" ~ expression
+}
 
 number = @{ hexdecimal | binary | float | int | nan | infinity }
 hexdecimal = @{ "0x" ~ ASCII_HEX_DIGIT+ }
@@ -26,14 +45,23 @@ nil = { "nil" }
 value = { number | string | boolean | nil }
 
 expression = { fixed_primary ~ (infix ~ fixed_primary)* }
-primary = _{ value | identifier | "(" ~ expression ~ ")" }
+primary = _{ value | identifier | block | "(" ~ expression ~ ")" }
 fixed_primary = _{ prefix? ~ primary ~ postfix? }
 
-infix = _{ add | sub | mul | div }
+infix = _{ 
+  eq | neq | lte | gte | lt | gt | 
+  add | sub | mul | div
+}
 add = { "+" }
 sub = { "-" }
 mul = { "*" }
 div = { "/" }
+eq = { "==" }
+neq = { "!=" }
+lt = { "<" }
+gt = { ">" }
+lte = { "<=" }
+gte = { ">=" }
 
 prefix = _{ negate }
 negate = { "-" }

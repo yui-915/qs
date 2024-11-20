@@ -10,6 +10,33 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum Statement {
         Expression(Expression),
+        Set(SetStatement),
+        Define(DefineStatement),
+        DefineAndSet(DefineAndSetStatement),
+        If(IfStatement),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct IfStatement {
+        pub conditionals: Vec<(Expression, Statement)>,
+        pub otherwise: Option<Box<Statement>>,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct SetStatement {
+        pub identifier: String,
+        pub expression: Expression,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct DefineStatement {
+        pub identifier: String,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct DefineAndSetStatement {
+        pub identifier: String,
+        pub expression: Expression,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -19,6 +46,12 @@ pub mod nodes {
         Prefixed(PrefixedExpression),
         Postfixed(PostfixedExpression),
         Identifier(String),
+        Block(Block),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct Block {
+        pub statements: Vec<Statement>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -53,6 +86,12 @@ pub mod nodes {
         Sub,
         Mul,
         Div,
+        Eq,
+        Neq,
+        Gt,
+        Lt,
+        Gte,
+        Lte,
     }
 }
 
@@ -110,11 +149,86 @@ impl ParseMulti for Program {
     }
 }
 
+impl ParseMulti for Block {
+    fn parse(pairs: Pairs) -> Self {
+        let mut statements = vec![];
+        for pair in pairs {
+            match pair.as_rule() {
+                Rule::statement => statements.push(Statement::parse(pair.first_child())),
+                _ => unreachable!("{:#?}", pair),
+            }
+        }
+        Block { statements }
+    }
+}
+
 impl ParseSingle for Statement {
     fn parse(pair: Pair) -> Self {
         match pair.as_rule() {
             Rule::expression => Statement::Expression(Expression::parse(pair.childs())),
-            _ => unreachable!(),
+            Rule::set_statement => Statement::Set(SetStatement::parse(pair.childs())),
+            Rule::define_statement => Statement::Define(DefineStatement::parse(pair.first_child())),
+            Rule::define_and_set_statement => {
+                Statement::DefineAndSet(DefineAndSetStatement::parse(pair.childs()))
+            }
+            Rule::if_statement => Statement::If(IfStatement::parse(pair.childs())),
+            _ => unreachable!("{:#?}", pair),
+        }
+    }
+}
+
+impl ParseMulti for IfStatement {
+    fn parse(pairs: Pairs) -> Self {
+        let mut iter = pairs.into_iter();
+        let mut conditionals = vec![];
+        let mut otherwise = None;
+
+        while let Some(pair) = iter.next() {
+            match pair.as_rule() {
+                Rule::expression => {
+                    let expression = Expression::parse(pair.childs());
+                    let statement = Statement::parse(iter.next().unwrap().first_child());
+                    conditionals.push((expression, statement));
+                }
+                Rule::statement => {
+                    otherwise = Some(Box::new(Statement::parse(pair.first_child())));
+                }
+                _ => unreachable!("{:#?}", pair),
+            }
+        }
+
+        Self {
+            conditionals,
+            otherwise,
+        }
+    }
+}
+
+impl ParseSingle for DefineStatement {
+    fn parse(pair: Pair) -> Self {
+        let identifier = pair.as_str().to_string();
+        DefineStatement { identifier }
+    }
+}
+
+impl ParseMulti for DefineAndSetStatement {
+    fn parse(mut pairs: Pairs) -> Self {
+        let identifier = pairs.take_().as_str().to_string();
+        let expression = pairs.take_();
+        DefineAndSetStatement {
+            identifier,
+            expression: Expression::parse(expression.childs()),
+        }
+    }
+}
+
+impl ParseMulti for SetStatement {
+    fn parse(mut pairs: Pairs) -> Self {
+        let identifier = pairs.take_().as_str().to_string();
+        let expression = pairs.take_();
+        SetStatement {
+            identifier,
+            expression: Expression::parse(expression.childs()),
         }
     }
 }
@@ -126,6 +240,7 @@ impl ParseMulti for Expression {
                 Rule::value => Expression::Value(Value::parse(primary.first_child())),
                 Rule::expression => Expression::parse(primary.childs()),
                 Rule::identifier => Expression::Identifier(primary.as_str().to_string()),
+                Rule::block => Expression::Block(Block::parse(primary.childs())),
                 _ => unreachable!("{:#?}", primary),
             })
             .map_infix(|lhs, op, rhs| {
@@ -136,6 +251,12 @@ impl ParseMulti for Expression {
                         Rule::sub => Operator::Sub,
                         Rule::mul => Operator::Mul,
                         Rule::div => Operator::Div,
+                        Rule::eq => Operator::Eq,
+                        Rule::neq => Operator::Neq,
+                        Rule::gt => Operator::Gt,
+                        Rule::lt => Operator::Lt,
+                        Rule::gte => Operator::Gte,
+                        Rule::lte => Operator::Lte,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),

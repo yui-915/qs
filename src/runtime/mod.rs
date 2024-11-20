@@ -21,9 +21,7 @@ impl Runtime {
 
     pub fn run(&mut self, program: Program) -> Value {
         for statement in program.statements {
-            let value = match statement {
-                Statement::Expression(expression) => expression.eval(&mut self.storage),
-            };
+            let value = statement.eval(&mut self.storage);
             self.storage.set("_", value);
         }
         self.storage.get("_")
@@ -32,6 +30,62 @@ impl Runtime {
 
 trait Evaluate {
     fn eval(&self, storage: &mut Storage) -> Value;
+}
+
+impl Evaluate for Statement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        match self {
+            Statement::Expression(expression) => expression.eval(storage),
+            Statement::Set(set) => set.eval(storage),
+            Statement::Define(define) => define.eval(storage),
+            Statement::DefineAndSet(define_and_set) => define_and_set.eval(storage),
+            Statement::If(if_statement) => if_statement.eval(storage),
+        }
+    }
+}
+
+impl Evaluate for IfStatement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        let mut value = None;
+        for (condition, statement) in &self.conditionals {
+            let cond = condition.eval(storage);
+            if ops::as_bool(cond) {
+                value = Some(statement.eval(storage));
+                break;
+            }
+        }
+
+        value.unwrap_or_else(|| {
+            if let Some(statement) = &self.otherwise {
+                statement.eval(storage)
+            } else {
+                Value::Nil
+            }
+        })
+    }
+}
+
+impl Evaluate for SetStatement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        let value = self.expression.eval(storage);
+        storage.set(&self.identifier, value.clone());
+        value
+    }
+}
+
+impl Evaluate for DefineStatement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        storage.define(&self.identifier, Value::Nil);
+        Value::Nil
+    }
+}
+
+impl Evaluate for DefineAndSetStatement {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        let value = self.expression.eval(storage);
+        storage.define(&self.identifier, value.clone());
+        value
+    }
 }
 
 impl Evaluate for Value {
@@ -48,7 +102,21 @@ impl Evaluate for Expression {
             Expression::Prefixed(prefixed) => prefixed.eval(storage),
             Expression::Postfixed(postfixed) => postfixed.eval(storage),
             Expression::Identifier(identifier) => storage.get(identifier),
+            Expression::Block(block) => block.eval(storage),
         }
+    }
+}
+
+impl Evaluate for Block {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        storage.push_scope();
+        for statement in &self.statements {
+            let value = statement.eval(storage);
+            storage.set("_", value);
+        }
+        let res = storage.get("_");
+        storage.pop_scope();
+        res
     }
 }
 
@@ -61,6 +129,12 @@ impl Evaluate for Operation {
             Operator::Sub => ops::sub(lhs, rhs),
             Operator::Mul => ops::mul(lhs, rhs),
             Operator::Div => ops::div(lhs, rhs),
+            Operator::Eq => ops::eq(lhs, rhs),
+            Operator::Neq => ops::neq(lhs, rhs),
+            Operator::Gt => ops::gt(lhs, rhs),
+            Operator::Lt => ops::lt(lhs, rhs),
+            Operator::Gte => ops::gte(lhs, rhs),
+            Operator::Lte => ops::lte(lhs, rhs),
         }
     }
 }

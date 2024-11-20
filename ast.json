@@ -1,3 +1,83 @@
 {
-   "statements": []
+   "statements": [
+      {
+         "Set": {
+            "identifier": "x",
+            "expression": {
+               "Value": {
+                  "Number": 6.0
+               }
+            }
+         }
+      },
+      {
+         "If": {
+            "conditionals": [
+               [
+                  {
+                     "Infixed": {
+                        "lhs": {
+                           "Identifier": "x"
+                        },
+                        "infix": "Lte",
+                        "rhs": {
+                           "Value": {
+                              "Number": 5.0
+                           }
+                        }
+                     }
+                  },
+                  {
+                     "Expression": {
+                        "Postfixed": {
+                           "Print": {
+                              "Value": {
+                                 "String": "hello"
+                              }
+                           }
+                        }
+                     }
+                  }
+               ],
+               [
+                  {
+                     "Infixed": {
+                        "lhs": {
+                           "Identifier": "x"
+                        },
+                        "infix": "Gte",
+                        "rhs": {
+                           "Value": {
+                              "Number": 7.0
+                           }
+                        }
+                     }
+                  },
+                  {
+                     "Expression": {
+                        "Postfixed": {
+                           "Print": {
+                              "Value": {
+                                 "String": "world"
+                              }
+                           }
+                        }
+                     }
+                  }
+               ]
+            ],
+            "otherwise": {
+               "Expression": {
+                  "Postfixed": {
+                     "Print": {
+                        "Value": {
+                           "String": "!"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   ]
 }
