@@ -1,0 +1,40 @@
+program = _{ SOI ~ NEWLINE* ~ (statement ~ NEWLINE+)* ~ NEWLINE* ~ EOI }
+
+WHITESPACE = _{ " " | "\t" }
+COMMENT = _{ 
+  "//" ~ (!NEWLINE ~ ANY)*
+  | "/*" ~ (!"*/" ~ ANY)* ~ "*/"
+}
+
+statement = { expression }
+
+number = @{ hexdecimal | binary | float | int | nan | infinity }
+hexdecimal = @{ "0x" ~ ASCII_HEX_DIGIT+ }
+binary = @{ "0b" ~ ASCII_BIN_DIGIT+ }
+int = @{ ASCII_DIGIT+ }
+float = @{ ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+ }
+nan = @{ "nan" }
+infinity = @{ "inf" }
+
+identifier = @{ (ASCII_ALPHANUMERIC | "_")+ }
+
+string_quotes = { "\"" | "'" }
+string = @{ PUSH(string_quotes) ~ (("\\" | !PEEK) ~ ANY)*~ POP }
+
+boolean = { "true" | "false" }
+nil = { "nil" }
+value = { number | string | boolean | nil }
+
+expression = { fixed_primary ~ (infix ~ fixed_primary)* }
+primary = _{ value | identifier | "(" ~ expression ~ ")" }
+fixed_primary = _{ prefix? ~ primary ~ postfix? }
+
+infix = _{ add }
+add = { "+" }
+
+prefix = _{ negate }
+negate = { "-" }
+
+postfix = _{ debug | print }
+debug = @{ "?" ~ "?"+ }
+print = @{ "?" }

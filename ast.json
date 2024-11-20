@@ -1,0 +1,29 @@
+{
+   "statements": [
+      {
+         "Expression": {
+            "Postfixed": {
+               "Debug": {
+                  "Infixed": {
+                     "lhs": {
+                        "Postfixed": {
+                           "Print": {
+                              "Value": {
+                                 "Number": 5.0
+                              }
+                           }
+                        }
+                     },
+                     "infix": "Add",
+                     "rhs": {
+                        "Value": {
+                           "Number": 5.0
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   ]
+}
