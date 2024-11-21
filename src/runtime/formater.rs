@@ -10,8 +10,19 @@ pub trait Printable {
 impl Printable for Value {
     fn fmt_print(&self) -> String {
         match self {
+            Value::Array(values_array) => {
+                format!(
+                    "[{}]",
+                    values_array
+                        .elements
+                        .iter()
+                        .map(|value| value.fmt_print())
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                )
+            }
             Value::Number(value) => value.to_string(),
-            Value::String(value) => value.to_string(),
+            Value::String(value) => format!("\"{}\"", value),
             Value::Boolean(value) => value.to_string(),
             Value::Nil => "nil".to_string(),
             Value::Closure(closure) => match closure {

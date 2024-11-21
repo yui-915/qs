@@ -63,8 +63,17 @@ closure_args = { "|" ~ "|" | "|" ~ identifier  ~ ("," ~ identifier)* ~ ","? ~ "|
 closure = { closure_args ~ expression }
 
 expression = { fixed_primary ~ (infix ~ fixed_primary)* }
-primary = _{ function_call | map | value | identifier | block | "(" ~ expression ~ ")" }
+primary = _{ 
+  function_call | map | value |
+  identifier | block | array | 
+  "(" ~ expression ~ ")"
+}
 fixed_primary = _{ prefix? ~ primary ~ postfix? }
+
+array = { 
+  "[" ~ "]" | 
+  "[" ~ expression ~ ("," ~ expression)* ~ ","? ~ "]"
+}
 
 function_call = { identifier ~ ("(" ~ expression ~ ("," ~ expression)* ~ ")" | "(" ~ ")") }
 

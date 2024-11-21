@@ -153,7 +153,20 @@ impl Evaluate for Expression {
             Expression::Block(block) => block.eval(storage),
             Expression::Map(map) => map.eval(storage),
             Expression::FunctionCall(call) => call.eval(storage),
+            Expression::Array(array) => array.eval(storage),
         }
+    }
+}
+
+impl Evaluate for ExpressionsArray {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        Value::Array(ValuesArray {
+            elements: self
+                .elements
+                .iter()
+                .map(|element| element.eval(storage))
+                .collect::<Vec<_>>(),
+        })
     }
 }
 

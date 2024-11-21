@@ -72,6 +72,12 @@ pub mod nodes {
         Block(Block),
         Map(MapExpression),
         FunctionCall(FunctionCall),
+        Array(ExpressionsArray),
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct ExpressionsArray {
+        pub elements: Vec<Expression>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -94,11 +100,17 @@ pub mod nodes {
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum Value {
+        Array(ValuesArray),
         Closure(Closure),
         Number(f64),
         String(String),
         Boolean(bool),
         Nil,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct ValuesArray {
+        pub elements: Vec<Value>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -123,7 +135,7 @@ pub mod nodes {
         where
             S: Serializer,
         {
-            serializer.serialize_str(&format!("NativeClosure"))
+            serializer.serialize_str("NativeClosure")
         }
     }
 
@@ -417,6 +429,16 @@ impl ParseMulti for FunctionCall {
     }
 }
 
+impl ParseMulti for ExpressionsArray {
+    fn parse(pairs: Pairs) -> Self {
+        let mut elements = vec![];
+        for pair in pairs {
+            elements.push(Expression::parse(pair.childs()));
+        }
+        ExpressionsArray { elements }
+    }
+}
+
 impl ParseMulti for Expression {
     fn parse(pairs: Pairs) -> Self {
         PRATT_PARSER
@@ -429,6 +451,7 @@ impl ParseMulti for Expression {
                 Rule::function_call => {
                     Expression::FunctionCall(FunctionCall::parse(primary.childs()))
                 }
+                Rule::array => Expression::Array(ExpressionsArray::parse(primary.childs())),
                 _ => unreachable!("{:#?}", primary),
             })
             .map_infix(|lhs, op, rhs| {

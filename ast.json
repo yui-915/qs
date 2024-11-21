@@ -4,268 +4,41 @@
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Value": {
-                     "String": "welcome yui's calculator"
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Value": {
-                     "String": "written in my own programming language!!"
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Value": {
-                     "String": ""
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Define": {
-            "identifier": "op"
-         }
-      },
-      {
-         "While": {
-            "expression": {
-               "Infixed": {
-                  "lhs": {
-                     "Infixed": {
-                        "lhs": {
-                           "Infixed": {
-                              "lhs": {
-                                 "Infixed": {
-                                    "lhs": {
-                                       "Identifier": "op"
-                                    },
-                                    "infix": "Neq",
-                                    "rhs": {
-                                       "Value": {
-                                          "String": "+"
-                                       }
-                                    }
-                                 }
-                              },
-                              "infix": "And",
-                              "rhs": {
-                                 "Infixed": {
-                                    "lhs": {
-                                       "Identifier": "op"
-                                    },
-                                    "infix": "Neq",
-                                    "rhs": {
-                                       "Value": {
-                                          "String": "-"
-                                       }
-                                    }
-                                 }
-                              }
-                           }
-                        },
-                        "infix": "And",
-                        "rhs": {
-                           "Infixed": {
-                              "lhs": {
-                                 "Identifier": "op"
-                              },
-                              "infix": "Neq",
-                              "rhs": {
-                                 "Value": {
-                                    "String": "*"
-                                 }
-                              }
-                           }
-                        }
-                     }
-                  },
-                  "infix": "And",
-                  "rhs": {
-                     "Infixed": {
-                        "lhs": {
-                           "Identifier": "op"
-                        },
-                        "infix": "Neq",
-                        "rhs": {
+                  "Array": {
+                     "elements": [
+                        {
                            "Value": {
-                              "String": "/"
+                              "Number": 1.0
                            }
-                        }
-                     }
-                  }
-               }
-            },
-            "statement": {
-               "Expression": {
-                  "Block": {
-                     "statements": [
+                        },
                         {
-                           "Expression": {
-                              "FunctionCall": {
-                                 "name": "cout",
-                                 "arguments": [
-                                    {
-                                       "Value": {
-                                          "String": "please select one of (+ - * /): "
-                                       }
-                                    }
-                                 ]
+                           "Infixed": {
+                              "lhs": {
+                                 "Value": {
+                                    "Number": 2.0
+                                 }
+                              },
+                              "infix": "Add",
+                              "rhs": {
+                                 "Value": {
+                                    "Number": 3.0
+                                 }
                               }
                            }
                         },
                         {
-                           "Set": {
-                              "identifier": "op",
-                              "expression": {
-                                 "FunctionCall": {
-                                    "name": "cin_char",
-                                    "arguments": []
-                                 }
-                              }
+                           "Value": {
+                              "String": "4+5"
                            }
+                        },
+                        {
+                           "Value": {
+                              "Boolean": true
+                           }
+                        },
+                        {
+                           "Value": "Nil"
                         }
-                     ],
-                     "functions": []
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Set": {
-            "identifier": "x",
-            "expression": {
-               "FunctionCall": {
-                  "name": "read_num",
-                  "arguments": [
-                     {
-                        "Value": {
-                           "String": "1"
-                        }
-                     }
-                  ]
-               }
-            }
-         }
-      },
-      {
-         "Set": {
-            "identifier": "y",
-            "expression": {
-               "FunctionCall": {
-                  "name": "read_num",
-                  "arguments": [
-                     {
-                        "Value": {
-                           "String": "2"
-                        }
-                     }
-                  ]
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Map": {
-                     "input": {
-                        "Identifier": "op"
-                     },
-                     "map": [
-                        [
-                           [
-                              {
-                                 "Value": {
-                                    "String": "+"
-                                 }
-                              }
-                           ],
-                           {
-                              "Infixed": {
-                                 "lhs": {
-                                    "Identifier": "x"
-                                 },
-                                 "infix": "Add",
-                                 "rhs": {
-                                    "Identifier": "y"
-                                 }
-                              }
-                           }
-                        ],
-                        [
-                           [
-                              {
-                                 "Value": {
-                                    "String": "-"
-                                 }
-                              }
-                           ],
-                           {
-                              "Infixed": {
-                                 "lhs": {
-                                    "Identifier": "x"
-                                 },
-                                 "infix": "Sub",
-                                 "rhs": {
-                                    "Identifier": "y"
-                                 }
-                              }
-                           }
-                        ],
-                        [
-                           [
-                              {
-                                 "Value": {
-                                    "String": "*"
-                                 }
-                              }
-                           ],
-                           {
-                              "Infixed": {
-                                 "lhs": {
-                                    "Identifier": "x"
-                                 },
-                                 "infix": "Mul",
-                                 "rhs": {
-                                    "Identifier": "y"
-                                 }
-                              }
-                           }
-                        ],
-                        [
-                           [
-                              {
-                                 "Value": {
-                                    "String": "/"
-                                 }
-                              }
-                           ],
-                           {
-                              "Infixed": {
-                                 "lhs": {
-                                    "Identifier": "x"
-                                 },
-                                 "infix": "Div",
-                                 "rhs": {
-                                    "Identifier": "y"
-                                 }
-                              }
-                           }
-                        ]
                      ]
                   }
                }
@@ -273,93 +46,5 @@
          }
       }
    ],
-   "functions": [
-      {
-         "name": "read_num",
-         "closure": {
-            "arguments": [
-               "n"
-            ],
-            "body": {
-               "Block": {
-                  "statements": [
-                     {
-                        "Define": {
-                           "identifier": "output"
-                        }
-                     },
-                     {
-                        "While": {
-                           "expression": {
-                              "Infixed": {
-                                 "lhs": {
-                                    "Identifier": "output"
-                                 },
-                                 "infix": "Eq",
-                                 "rhs": {
-                                    "Value": "Nil"
-                                 }
-                              }
-                           },
-                           "statement": {
-                              "Expression": {
-                                 "Block": {
-                                    "statements": [
-                                       {
-                                          "Expression": {
-                                             "FunctionCall": {
-                                                "name": "cout",
-                                                "arguments": [
-                                                   {
-                                                      "Infixed": {
-                                                         "lhs": {
-                                                            "Infixed": {
-                                                               "lhs": {
-                                                                  "Value": {
-                                                                     "String": "num "
-                                                                  }
-                                                               },
-                                                               "infix": "Add",
-                                                               "rhs": {
-                                                                  "Identifier": "n"
-                                                               }
-                                                            }
-                                                         },
-                                                         "infix": "Add",
-                                                         "rhs": {
-                                                            "Value": {
-                                                               "String": " is: "
-                                                            }
-                                                         }
-                                                      }
-                                                   }
-                                                ]
-                                             }
-                                          }
-                                       },
-                                       {
-                                          "Set": {
-                                             "identifier": "output",
-                                             "expression": {
-                                                "FunctionCall": {
-                                                   "name": "cin_number",
-                                                   "arguments": []
-                                                }
-                                             }
-                                          }
-                                       }
-                                    ],
-                                    "functions": []
-                                 }
-                              }
-                           }
-                        }
-                     }
-                  ],
-                  "functions": []
-               }
-            }
-         }
-      }
-   ]
+   "functions": []
 }
