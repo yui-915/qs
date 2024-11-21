@@ -88,6 +88,7 @@ map_cases = {
 infix = _{ 
   and | or |
   eq | neq | lte | gte | lt | gt | 
+  inclusive_range | exclusive_range | 
   add | sub | mul | div |
   double_dollar | dollar
 }
@@ -105,6 +106,8 @@ and = { "&&" }
 or = { "||" }
 dollar = { "$" }
 double_dollar = { "$$" }
+exclusive_range = { ".." }
+inclusive_range = { "..." }
 
 prefix = _{ negate | not }
 negate = { "-" }

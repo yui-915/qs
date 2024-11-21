@@ -100,6 +100,8 @@ pub mod nodes {
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum Value {
+        ExclusiveRange(f64, f64),
+        InclusiveRange(f64, f64),
         Array(ValuesArray),
         Closure(Closure),
         Number(f64),
@@ -175,6 +177,8 @@ pub mod nodes {
         Or,
         Dollar,
         DoubleDollar,
+        ExclusiveRange,
+        InclusiveRange,
     }
 }
 
@@ -476,6 +480,8 @@ impl ParseMulti for Expression {
                         Rule::or => Operator::Or,
                         Rule::dollar => Operator::Dollar,
                         Rule::double_dollar => Operator::DoubleDollar,
+                        Rule::exclusive_range => Operator::ExclusiveRange,
+                        Rule::inclusive_range => Operator::InclusiveRange,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),

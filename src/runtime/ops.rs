@@ -187,31 +187,73 @@ pub fn not(value: Value) -> Value {
     Value::Boolean(!as_bool(value))
 }
 
+pub fn to_index(i: f64, len: usize) -> Option<usize> {
+    let (i, len) = (i as isize, len as isize);
+    if i >= 0 && i < len {
+        Some(i as usize)
+    } else {
+        let i = len + i;
+        if i >= 0 && i < len {
+            Some(i as usize)
+        } else {
+            None
+        }
+    }
+}
+
+pub fn erange_to_idxs(start: f64, end: f64, len: usize) -> Option<(usize, usize)> {
+    let (start, end) = (to_index(start, len), to_index(end, len));
+    match (start, end) {
+        (Some(start), Some(end)) => Some((start, end)),
+        _ => None,
+    }
+}
+
 pub fn index(value: Value, index: Value) -> Value {
     use Value::*;
-    if let Number(index) = index {
-        let i = index as isize;
-        match value {
-            Array(arr) => {
-                if index >= -0. {
-                    let i = i as usize;
-                    if i >= arr.elements.len() {
-                        Nil
-                    } else {
-                        arr.elements[i].clone()
-                    }
-                } else {
-                    let i = arr.elements.len() as isize + i;
-                    if i < 0 {
-                        Nil
-                    } else {
-                        arr.elements[i as usize].clone()
-                    }
+    match value {
+        Array(arr) => match index {
+            Number(index) => to_index(index, arr.elements.len())
+                .map(|i| arr.elements[i].clone())
+                .unwrap_or(Nil),
+            ExclusiveRange(start, end) => {
+                let len = arr.elements.len();
+                let (start, end) = (to_index(start, len), to_index(end - 1., len));
+                match (start, end) {
+                    (Some(start), Some(end)) => Value::Array(ValuesArray {
+                        elements: arr.elements[start..=end].to_vec(),
+                    }),
+                    _ => Nil,
+                }
+            }
+            InclusiveRange(start, end) => {
+                let len = arr.elements.len();
+                let (start, end) = (to_index(start, len), to_index(end, len));
+                match (start, end) {
+                    (Some(start), Some(end)) => Value::Array(ValuesArray {
+                        elements: arr.elements[start..=end].to_vec(),
+                    }),
+                    _ => Nil,
                 }
             }
             _ => Nil,
-        }
-    } else {
-        Nil
+        },
+        _ => Nil,
+    }
+}
+
+pub fn exclusive_range(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Number(lhs), Number(rhs)) => ExclusiveRange(lhs, rhs),
+        _ => Nil,
+    }
+}
+
+pub fn inclusive_range(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Number(lhs), Number(rhs)) => InclusiveRange(lhs, rhs),
+        _ => Nil,
     }
 }

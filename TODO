@@ -4,3 +4,5 @@ add ranges
 fix ops.rs
 fix formatter.rs
 add some standrads library functions
+lsp
+fix how range index is implemented

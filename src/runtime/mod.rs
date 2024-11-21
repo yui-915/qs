@@ -263,6 +263,8 @@ impl Evaluate for Operation {
             Operator::Or => ops::or(lhs, rhs),
             Operator::Dollar => ops::dollar(lhs, rhs),
             Operator::DoubleDollar => ops::double_dollar(lhs, rhs),
+            Operator::ExclusiveRange => ops::exclusive_range(lhs, rhs),
+            Operator::InclusiveRange => ops::inclusive_range(lhs, rhs),
         }
     }
 }

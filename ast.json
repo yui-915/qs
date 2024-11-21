@@ -1,11 +1,36 @@
 {
    "statements": [
       {
-         "Set": {
+         "DefineAndSet": {
+            "identifier": "r",
+            "expression": {
+               "Infixed": {
+                  "lhs": {
+                     "Value": {
+                        "Number": 1.0
+                     }
+                  },
+                  "infix": "ExclusiveRange",
+                  "rhs": {
+                     "Value": {
+                        "Number": 3.0
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "DefineAndSet": {
             "identifier": "a",
             "expression": {
                "Array": {
                   "elements": [
+                     {
+                        "Value": {
+                           "Number": 0.0
+                        }
+                     },
                      {
                         "Value": {
                            "Number": 1.0
@@ -41,233 +66,7 @@
                            "Identifier": "a"
                         },
                         {
-                           "Value": {
-                              "Number": 0.0
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Value": {
-                              "Number": 1.0
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Value": {
-                              "Number": 2.0
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Value": {
-                              "Number": 3.0
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Value": {
-                              "Number": 4.0
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Prefixed": {
-                              "Negative": {
-                                 "Value": {
-                                    "Number": 0.0
-                                 }
-                              }
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Prefixed": {
-                              "Negative": {
-                                 "Value": {
-                                    "Number": 1.0
-                                 }
-                              }
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Prefixed": {
-                              "Negative": {
-                                 "Value": {
-                                    "Number": 2.0
-                                 }
-                              }
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Prefixed": {
-                              "Negative": {
-                                 "Value": {
-                                    "Number": 3.0
-                                 }
-                              }
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Prefixed": {
-                              "Negative": {
-                                 "Value": {
-                                    "Number": 4.0
-                                 }
-                              }
-                           }
-                        }
-                     ]
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Prefixed": {
-                              "Negative": {
-                                 "Value": {
-                                    "Number": 5.0
-                                 }
-                              }
-                           }
+                           "Identifier": "r"
                         }
                      ]
                   }
