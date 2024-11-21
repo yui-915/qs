@@ -20,7 +20,6 @@ pub mod nodes {
         Set(SetStatement),
         Define(DefineStatement),
         DefineAndSet(DefineAndSetStatement),
-        If(IfStatement),
         While(WhileStatement),
         For(ForStatement),
     }
@@ -34,7 +33,7 @@ pub mod nodes {
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
-    pub struct IfStatement {
+    pub struct IfExpression {
         pub conditionals: Vec<(Expression, Statement)>,
         pub otherwise: Option<Box<Statement>>,
     }
@@ -81,6 +80,7 @@ pub mod nodes {
         Map(MapExpression),
         FunctionCall(FunctionCall),
         Array(ExpressionsArray),
+        If(IfExpression),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -306,7 +306,6 @@ impl ParseSingle for Statement {
             Rule::define_and_set_statement => {
                 Statement::DefineAndSet(DefineAndSetStatement::parse(pair.childs()))
             }
-            Rule::if_statement => Statement::If(IfStatement::parse(pair.childs())),
             Rule::while_statement => Statement::While(WhileStatement::parse(pair.childs())),
             Rule::for_statement => Statement::For(ForStatement::parse(pair.childs())),
             _ => unreachable!("{:#?}", pair),
@@ -342,7 +341,7 @@ impl ParseMulti for WhileStatement {
     }
 }
 
-impl ParseMulti for IfStatement {
+impl ParseMulti for IfExpression {
     fn parse(pairs: Pairs) -> Self {
         let mut iter = pairs.into_iter();
         let mut conditionals = vec![];
@@ -476,6 +475,7 @@ impl ParseMulti for Expression {
                     Expression::FunctionCall(FunctionCall::parse(primary.childs()))
                 }
                 Rule::array => Expression::Array(ExpressionsArray::parse(primary.childs())),
+                Rule::if_expr => Expression::If(IfExpression::parse(primary.childs())),
                 _ => unreachable!("{:#?}", primary),
             })
             .map_infix(|lhs, op, rhs| {

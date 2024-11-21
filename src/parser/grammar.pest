@@ -8,19 +8,11 @@ COMMENT = _{
 }
 
 statement = { 
-  if_statement | while_statement | for_statement | function_definition |
+  while_statement | for_statement | function_definition |
   define_and_set_statement | define_statement | set_statement |
   expression
 }
 block = { "{" ~ statements_stream ~ "}" }
-
-if_statement = { 
-  "if" ~ expression ~ NEWLINE* ~ statement ~ 
-  (NEWLINE* ~ "else if" ~ expression ~ NEWLINE* ~ statement)* ~
-  (NEWLINE* ~ "else" ~ NEWLINE* ~ statement)? |
-
-  "if" ~ expression ~ NEWLINE* ~ statement 
-}
 
 while_statement = { "while" ~ expression ~ NEWLINE* ~ statement }
 for_statement = { 
@@ -69,11 +61,19 @@ closure = { closure_args ~ expression }
 
 expression = { fixed_primary ~ (infix ~ fixed_primary)* }
 primary = _{ 
+  if_expr |
   function_call | map | value |
   identifier | block | array | 
   "(" ~ expression ~ ")"
 }
 fixed_primary = _{ prefix* ~ primary ~ postfix* }
+
+
+if_expr = { 
+  "if" ~ expression ~ NEWLINE* ~ statement ~ 
+  (NEWLINE* ~ "else if" ~ expression ~ NEWLINE* ~ statement)* ~
+  (NEWLINE* ~ "else" ~ NEWLINE* ~ statement)?
+}
 
 array = { 
   "[" ~ "]" | 

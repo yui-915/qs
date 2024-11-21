@@ -49,7 +49,6 @@ impl Evaluate for Statement {
             Statement::Set(set) => set.eval(storage),
             Statement::Define(define) => define.eval(storage),
             Statement::DefineAndSet(define_and_set) => define_and_set.eval(storage),
-            Statement::If(if_statement) => if_statement.eval(storage),
             Statement::While(while_statement) => while_statement.eval(storage),
             Statement::For(for_statement) => for_statement.eval(storage),
         }
@@ -90,7 +89,7 @@ impl Evaluate for WhileStatement {
     }
 }
 
-impl Evaluate for IfStatement {
+impl Evaluate for IfExpression {
     fn eval(&self, storage: &mut Storage) -> Value {
         storage.push_scope();
         let mut value = None;
@@ -167,6 +166,7 @@ impl Evaluate for Expression {
             Expression::Map(map) => map.eval(storage),
             Expression::FunctionCall(call) => call.eval(storage),
             Expression::Array(array) => array.eval(storage),
+            Expression::If(if_expression) => if_expression.eval(storage),
         }
     }
 }

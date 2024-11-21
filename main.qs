@@ -1,7 +1,7 @@
-let a = [1,2,3]?
-a += 5
-a?
+test = |x| (if x? > 5 "more" else "less")?
 
-let x = a[3]?
-x += -2
-x?
+test(1)
+test(4)
+test(5)
+test(6)
+test(69)

@@ -1,87 +1,59 @@
 {
    "statements": [
       {
-         "DefineAndSet": {
-            "identifier": "a",
-            "expression": {
-               "Postfixed": {
-                  "Print": {
-                     "Array": {
-                        "elements": [
-                           {
-                              "Value": {
-                                 "Number": 1.0
-                              }
-                           },
-                           {
-                              "Value": {
-                                 "Number": 2.0
-                              }
-                           },
-                           {
-                              "Value": {
-                                 "Number": 3.0
-                              }
-                           }
-                        ]
-                     }
-                  }
-               }
-            }
-         }
-      },
-      {
          "Set": {
-            "identifier": "a",
-            "op": "Increment",
+            "identifier": "test",
+            "op": "Set",
             "expression": {
                "Value": {
-                  "Number": 5.0
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Identifier": "a"
-               }
-            }
-         }
-      },
-      {
-         "DefineAndSet": {
-            "identifier": "x",
-            "expression": {
-               "Postfixed": {
-                  "Print": {
-                     "Postfixed": {
-                        "Index": [
-                           {
-                              "Identifier": "a"
-                           },
-                           {
-                              "Value": {
-                                 "Number": 3.0
+                  "Closure": {
+                     "Normal": {
+                        "arguments": [
+                           "x"
+                        ],
+                        "body": {
+                           "Postfixed": {
+                              "Print": {
+                                 "If": {
+                                    "conditionals": [
+                                       [
+                                          {
+                                             "Infixed": {
+                                                "lhs": {
+                                                   "Postfixed": {
+                                                      "Print": {
+                                                         "Identifier": "x"
+                                                      }
+                                                   }
+                                                },
+                                                "infix": "Gt",
+                                                "rhs": {
+                                                   "Value": {
+                                                      "Number": 5.0
+                                                   }
+                                                }
+                                             }
+                                          },
+                                          {
+                                             "Expression": {
+                                                "Value": {
+                                                   "String": "more"
+                                                }
+                                             }
+                                          }
+                                       ]
+                                    ],
+                                    "otherwise": {
+                                       "Expression": {
+                                          "Value": {
+                                             "String": "less"
+                                          }
+                                       }
+                                    }
+                                 }
                               }
                            }
-                        ]
-                     }
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Set": {
-            "identifier": "x",
-            "op": "Increment",
-            "expression": {
-               "Prefixed": {
-                  "Negative": {
-                     "Value": {
-                        "Number": 2.0
+                        }
                      }
                   }
                }
@@ -90,10 +62,71 @@
       },
       {
          "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Identifier": "x"
-               }
+            "FunctionCall": {
+               "name": "test",
+               "arguments": [
+                  {
+                     "Value": {
+                        "Number": 1.0
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "test",
+               "arguments": [
+                  {
+                     "Value": {
+                        "Number": 4.0
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "test",
+               "arguments": [
+                  {
+                     "Value": {
+                        "Number": 5.0
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "test",
+               "arguments": [
+                  {
+                     "Value": {
+                        "Number": 6.0
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "Expression": {
+            "FunctionCall": {
+               "name": "test",
+               "arguments": [
+                  {
+                     "Value": {
+                        "Number": 69.0
+                     }
+                  }
+               ]
             }
          }
       }
