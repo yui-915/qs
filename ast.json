@@ -2,18 +2,28 @@
    "statements": [
       {
          "DefineAndSet": {
-            "identifier": "r",
+            "identifier": "a",
             "expression": {
-               "Infixed": {
-                  "lhs": {
-                     "Value": {
-                        "Number": 1.0
-                     }
-                  },
-                  "infix": "ExclusiveRange",
-                  "rhs": {
-                     "Value": {
-                        "Number": 3.0
+               "Postfixed": {
+                  "Print": {
+                     "Array": {
+                        "elements": [
+                           {
+                              "Value": {
+                                 "Number": 1.0
+                              }
+                           },
+                           {
+                              "Value": {
+                                 "Number": 2.0
+                              }
+                           },
+                           {
+                              "Value": {
+                                 "Number": 3.0
+                              }
+                           }
+                        ]
                      }
                   }
                }
@@ -21,37 +31,12 @@
          }
       },
       {
-         "DefineAndSet": {
+         "Set": {
             "identifier": "a",
+            "op": "Increment",
             "expression": {
-               "Array": {
-                  "elements": [
-                     {
-                        "Value": {
-                           "Number": 0.0
-                        }
-                     },
-                     {
-                        "Value": {
-                           "Number": 1.0
-                        }
-                     },
-                     {
-                        "Value": {
-                           "Number": 2.0
-                        }
-                     },
-                     {
-                        "Value": {
-                           "Number": 3.0
-                        }
-                     },
-                     {
-                        "Value": {
-                           "Number": 4.0
-                        }
-                     }
-                  ]
+               "Value": {
+                  "Number": 5.0
                }
             }
          }
@@ -60,16 +45,54 @@
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "a"
-                        },
-                        {
-                           "Identifier": "r"
-                        }
-                     ]
+                  "Identifier": "a"
+               }
+            }
+         }
+      },
+      {
+         "DefineAndSet": {
+            "identifier": "x",
+            "expression": {
+               "Postfixed": {
+                  "Print": {
+                     "Postfixed": {
+                        "Index": [
+                           {
+                              "Identifier": "a"
+                           },
+                           {
+                              "Value": {
+                                 "Number": 3.0
+                              }
+                           }
+                        ]
+                     }
                   }
+               }
+            }
+         }
+      },
+      {
+         "Set": {
+            "identifier": "x",
+            "op": "Increment",
+            "expression": {
+               "Prefixed": {
+                  "Negative": {
+                     "Value": {
+                        "Number": 2.0
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Identifier": "x"
                }
             }
          }

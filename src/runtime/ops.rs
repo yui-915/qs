@@ -5,6 +5,14 @@ pub fn add(lhs: Value, rhs: Value) -> Value {
     match (lhs, rhs) {
         (Number(lhs), Number(rhs)) => Number(lhs + rhs),
         (String(lhs), String(rhs)) => String(lhs + &rhs),
+        (Array(lhs), rhs) => Array(ValuesArray {
+            elements: lhs
+                .elements
+                .iter()
+                .cloned()
+                .chain(std::iter::once(rhs))
+                .collect(),
+        }),
         _ => Nil,
     }
 }

@@ -115,7 +115,20 @@ impl Evaluate for IfStatement {
 
 impl Evaluate for SetStatement {
     fn eval(&self, storage: &mut Storage) -> Value {
-        let value = self.expression.eval(storage);
+        let new = self.expression.eval(storage);
+
+        let value = match self.op {
+            SetOp::Set => new,
+            _ => {
+                let curr = storage.get(&self.identifier).clone();
+                match self.op {
+                    SetOp::Set => unreachable!(),
+                    SetOp::Increment => ops::add(curr, new),
+                    SetOp::Decrement => ops::sub(curr, new),
+                }
+            }
+        };
+
         storage.set(&self.identifier, value.clone());
         value
     }

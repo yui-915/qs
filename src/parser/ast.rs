@@ -48,7 +48,15 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct SetStatement {
         pub identifier: String,
+        pub op: SetOp,
         pub expression: Expression,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub enum SetOp {
+        Set,
+        Increment,
+        Decrement,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -382,9 +390,17 @@ impl ParseMulti for DefineAndSetStatement {
 impl ParseMulti for SetStatement {
     fn parse(mut pairs: Pairs) -> Self {
         let identifier = pairs.take_().as_str().to_string();
+        let op = pairs.take_().first_child().as_rule();
+        let op = match op {
+            Rule::set => SetOp::Set,
+            Rule::increment => SetOp::Increment,
+            Rule::decrement => SetOp::Decrement,
+            _ => unreachable!("{:#?}", op),
+        };
         let expression = pairs.take_();
         SetStatement {
             identifier,
+            op,
             expression: Expression::parse(expression.childs()),
         }
     }

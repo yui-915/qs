@@ -35,12 +35,17 @@ function_definition = {
 function_args = { "(" ~ ")" | "(" ~ identifier ~ ("," ~ identifier)* ~ ","? ~ ")" }
 
 define_keyword = _{ "let" }
-set_statement = { identifier ~ "=" ~ expression }
 define_statement = { define_keyword ~ identifier }
 define_and_set_statement = { 
   define_keyword ~ identifier ~ "=" ~ expression | 
   identifier ~ ":=" ~ expression
 }
+
+set_statement = { identifier ~ set_op ~ expression }
+set_op = { set | increment | decrement }
+set = { "=" }
+increment = { "+=" }
+decrement = { "-=" }
 
 number = @{ hexdecimal | binary | float | int | nan | infinity }
 hexdecimal = @{ "0x" ~ ASCII_HEX_DIGIT+ }

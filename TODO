@@ -2,7 +2,7 @@ make `if` an expression instead of a statement
 make function calls a postfix
 add ranges
 fix ops.rs
-fix formatter.rs
+fix formatter.rs (add colors and debug)
 add some standrads library functions
 lsp
 fix how range index is implemented

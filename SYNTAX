@@ -42,7 +42,7 @@ array[0..2] // first two elements
 array[-2..-1] // last two elements
 array[0...2] // first three elements
 array += 1 // push
-array += 1, 2, 3 // push multiple
+// array += 1, 2, 3 // push multiple
 array[;-1]? // pop last element and print it
 array[;]? // same as above
 array[;0]? // pop first element and print it
