@@ -38,6 +38,16 @@ fn make_runtime() -> runtime::Runtime {
             .unwrap_or(Value::Nil)
     });
 
+    runtime.register_fn("cin_string", |_: Vec<Value>| {
+        let mut input = String::new();
+        stdin().read_line(&mut input).unwrap();
+        input
+            .trim()
+            .parse::<String>()
+            .map(Value::String)
+            .unwrap_or(Value::Nil)
+    });
+
     runtime
 }
 

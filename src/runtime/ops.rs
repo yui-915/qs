@@ -113,3 +113,72 @@ pub fn or(lhs: Value, rhs: Value) -> Value {
         _ => Nil,
     }
 }
+
+pub fn as_string(value: Value) -> String {
+    use Value::*;
+    match value {
+        String(value) => value,
+        Number(value) => value.to_string(),
+        Boolean(value) => value.to_string(),
+        Nil => "nil".to_string(),
+        _ => "????".to_string(),
+    }
+}
+
+pub fn dollar(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (String(lhs), String(rhs)) => Value::Array(ValuesArray {
+            elements: lhs
+                .split(&rhs)
+                .map(|value| Value::String(value.to_string()))
+                .collect(),
+        }),
+        (Array(lhs), String(rhs)) => Value::String(
+            lhs.elements
+                .iter()
+                .cloned()
+                .map(as_string)
+                .collect::<Vec<_>>()
+                .join(&rhs),
+        ),
+        _ => Nil,
+    }
+}
+
+pub fn double_dollar(lhs: Value, rhs: Value) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (String(lhs), String(rhs)) => Value::Array(ValuesArray {
+            elements: match lhs.split_once(&rhs) {
+                None => vec![lhs.clone()],
+                Some((lhs, rhs)) => vec![lhs.to_string(), rhs.to_string()],
+            }
+            .iter()
+            .cloned()
+            .map(Value::String)
+            .collect(),
+        }),
+        (Array(lhs), String(rhs)) => {
+            let mut arr = lhs
+                .elements
+                .iter()
+                .cloned()
+                .map(as_string)
+                .collect::<Vec<_>>();
+            let arr = match arr.len() {
+                0 => vec![],
+                1 => vec![arr[0].clone()],
+                _ => {
+                    let mut r = vec![arr[0].clone() + &rhs + &arr[1]];
+                    r.extend(arr.into_iter().skip(2));
+                    r
+                }
+            };
+            Value::Array(ValuesArray {
+                elements: arr.iter().cloned().map(Value::String).collect(),
+            })
+        }
+        _ => Nil,
+    }
+}

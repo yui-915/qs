@@ -261,6 +261,8 @@ impl Evaluate for Operation {
             Operator::Lte => ops::lte(lhs, rhs),
             Operator::And => ops::and(lhs, rhs),
             Operator::Or => ops::or(lhs, rhs),
+            Operator::Dollar => ops::dollar(lhs, rhs),
+            Operator::DoubleDollar => ops::double_dollar(lhs, rhs),
         }
     }
 }

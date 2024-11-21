@@ -171,6 +171,8 @@ pub mod nodes {
         Lte,
         And,
         Or,
+        Dollar,
+        DoubleDollar,
     }
 }
 
@@ -470,6 +472,8 @@ impl ParseMulti for Expression {
                         Rule::lte => Operator::Lte,
                         Rule::and => Operator::And,
                         Rule::or => Operator::Or,
+                        Rule::dollar => Operator::Dollar,
+                        Rule::double_dollar => Operator::DoubleDollar,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),
