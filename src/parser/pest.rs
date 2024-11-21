@@ -33,6 +33,7 @@ lazy_static::lazy_static! {
             .op(Op::infix(mul, Left) | Op::infix(div, Left))
             .op(Op::infix(dollar, Left) | Op::infix(double_dollar, Left))
             .op(Op::postfix(debug) | Op::postfix(print))
-            .op(Op::prefix(negate))
+            .op(Op::postfix(index))
+            .op(Op::prefix(negate) | Op::prefix(not))
     };
 }

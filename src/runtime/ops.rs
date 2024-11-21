@@ -182,3 +182,26 @@ pub fn double_dollar(lhs: Value, rhs: Value) -> Value {
         _ => Nil,
     }
 }
+
+pub fn not(value: Value) -> Value {
+    Value::Boolean(!as_bool(value))
+}
+
+pub fn index(value: Value, index: Value) -> Value {
+    use Value::*;
+    if let Number(index) = index {
+        let index = index as usize;
+        match value {
+            Array(arr) => {
+                if index >= arr.elements.len() {
+                    Nil
+                } else {
+                    arr.elements[index].clone()
+                }
+            }
+            _ => Nil,
+        }
+    } else {
+        Nil
+    }
+}

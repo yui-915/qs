@@ -68,7 +68,7 @@ primary = _{
   identifier | block | array | 
   "(" ~ expression ~ ")"
 }
-fixed_primary = _{ prefix? ~ primary ~ postfix? }
+fixed_primary = _{ prefix* ~ primary ~ postfix* }
 
 array = { 
   "[" ~ "]" | 
@@ -106,9 +106,12 @@ or = { "||" }
 dollar = { "$" }
 double_dollar = { "$$" }
 
-prefix = _{ negate }
+prefix = _{ negate | not }
 negate = { "-" }
+not = { "!" }
 
-postfix = _{ debug | print }
+postfix = _{ debug | print | index }
 debug = @{ "?" ~ "?"+ }
 print = @{ "?" }
+index = { "[" ~ expression ~ "]" }
+

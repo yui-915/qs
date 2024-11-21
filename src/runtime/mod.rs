@@ -271,6 +271,7 @@ impl Evaluate for PrefixedExpression {
     fn eval(&self, storage: &mut Storage) -> Value {
         match self {
             PrefixedExpression::Negative(expression) => ops::negate(expression.eval(storage)),
+            PrefixedExpression::Not(expression) => ops::not(expression.eval(storage)),
         }
     }
 }
@@ -287,6 +288,11 @@ impl Evaluate for PostfixedExpression {
                 let value = expression.eval(storage);
                 println!("{}", value.fmt_print());
                 value
+            }
+            PostfixedExpression::Index(expression, index) => {
+                let value = expression.eval(storage);
+                let index = index.eval(storage);
+                ops::index(value, index)
             }
         }
     }

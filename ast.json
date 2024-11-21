@@ -1,4 +1,48 @@
 {
-   "statements": [],
+   "statements": [
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Array": {
+                              "elements": [
+                                 {
+                                    "Value": {
+                                       "Number": 1.0
+                                    }
+                                 },
+                                 {
+                                    "Value": {
+                                       "Number": 2.0
+                                    }
+                                 },
+                                 {
+                                    "Value": {
+                                       "Number": 3.0
+                                    }
+                                 },
+                                 {
+                                    "Value": {
+                                       "Number": 4.0
+                                    }
+                                 }
+                              ]
+                           }
+                        },
+                        {
+                           "Value": {
+                              "Number": 0.0
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      }
+   ],
    "functions": []
 }

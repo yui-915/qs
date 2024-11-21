@@ -142,12 +142,14 @@ pub mod nodes {
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum PrefixedExpression {
         Negative(Box<Expression>),
+        Not(Box<Expression>),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum PostfixedExpression {
         Debug(Box<Expression>),
         Print(Box<Expression>),
+        Index(Box<Expression>, Box<Expression>),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -481,11 +483,16 @@ impl ParseMulti for Expression {
             })
             .map_prefix(|op, rhs| match op.as_rule() {
                 Rule::negate => Expression::Prefixed(PrefixedExpression::Negative(Box::new(rhs))),
+                Rule::not => Expression::Prefixed(PrefixedExpression::Not(Box::new(rhs))),
                 _ => unreachable!("{:#?}", op),
             })
             .map_postfix(|lhs, op| match op.as_rule() {
                 Rule::debug => Expression::Postfixed(PostfixedExpression::Debug(Box::new(lhs))),
                 Rule::print => Expression::Postfixed(PostfixedExpression::Print(Box::new(lhs))),
+                Rule::index => Expression::Postfixed(PostfixedExpression::Index(
+                    Box::new(lhs),
+                    Box::new(Expression::parse(op.childs())),
+                )),
                 _ => unreachable!("{:#?}", op),
             })
             .parse(pairs)

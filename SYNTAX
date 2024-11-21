@@ -11,8 +11,8 @@ copy_of_str := _
 "hello, world!"? // print
 _ ? // also print
 _ ?? // debug (print with line number/name/time/idk)
+_ ???????????????? // same as above
 
-// from keys, from values, from entries, 
 
 str := "hello_world_string_123"
 str$'_'? // ["hello", "world", "string", "123"] split
