@@ -190,13 +190,23 @@ pub fn not(value: Value) -> Value {
 pub fn index(value: Value, index: Value) -> Value {
     use Value::*;
     if let Number(index) = index {
-        let index = index as usize;
+        let i = index as isize;
         match value {
             Array(arr) => {
-                if index >= arr.elements.len() {
-                    Nil
+                if index >= -0. {
+                    let i = i as usize;
+                    if i >= arr.elements.len() {
+                        Nil
+                    } else {
+                        arr.elements[i].clone()
+                    }
                 } else {
-                    arr.elements[index].clone()
+                    let i = arr.elements.len() as isize + i;
+                    if i < 0 {
+                        Nil
+                    } else {
+                        arr.elements[i as usize].clone()
+                    }
                 }
             }
             _ => Nil,

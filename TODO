@@ -1,1 +1,6 @@
-fix negative index
+make `if` an expression instead of a statement 
+make function calls a postfix
+add ranges
+fix ops.rs
+fix formatter.rs
+add some standrads library functions

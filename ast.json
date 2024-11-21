@@ -1,40 +1,272 @@
 {
    "statements": [
       {
+         "Set": {
+            "identifier": "a",
+            "expression": {
+               "Array": {
+                  "elements": [
+                     {
+                        "Value": {
+                           "Number": 1.0
+                        }
+                     },
+                     {
+                        "Value": {
+                           "Number": 2.0
+                        }
+                     },
+                     {
+                        "Value": {
+                           "Number": 3.0
+                        }
+                     },
+                     {
+                        "Value": {
+                           "Number": 4.0
+                        }
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      {
          "Expression": {
             "Postfixed": {
                "Print": {
                   "Postfixed": {
                      "Index": [
                         {
-                           "Array": {
-                              "elements": [
-                                 {
-                                    "Value": {
-                                       "Number": 1.0
-                                    }
-                                 },
-                                 {
-                                    "Value": {
-                                       "Number": 2.0
-                                    }
-                                 },
-                                 {
-                                    "Value": {
-                                       "Number": 3.0
-                                    }
-                                 },
-                                 {
-                                    "Value": {
-                                       "Number": 4.0
-                                    }
-                                 }
-                              ]
-                           }
+                           "Identifier": "a"
                         },
                         {
                            "Value": {
                               "Number": 0.0
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Value": {
+                              "Number": 1.0
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Value": {
+                              "Number": 2.0
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Value": {
+                              "Number": 3.0
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Value": {
+                              "Number": 4.0
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Prefixed": {
+                              "Negative": {
+                                 "Value": {
+                                    "Number": 0.0
+                                 }
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Prefixed": {
+                              "Negative": {
+                                 "Value": {
+                                    "Number": 1.0
+                                 }
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Prefixed": {
+                              "Negative": {
+                                 "Value": {
+                                    "Number": 2.0
+                                 }
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Prefixed": {
+                              "Negative": {
+                                 "Value": {
+                                    "Number": 3.0
+                                 }
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Prefixed": {
+                              "Negative": {
+                                 "Value": {
+                                    "Number": 4.0
+                                 }
+                              }
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
+                        {
+                           "Identifier": "a"
+                        },
+                        {
+                           "Prefixed": {
+                              "Negative": {
+                                 "Value": {
+                                    "Number": 5.0
+                                 }
+                              }
                            }
                         }
                      ]
