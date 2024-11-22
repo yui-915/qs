@@ -208,16 +208,7 @@ impl Evaluate for FunctionCall {
                         .iter()
                         .map(|arg| arg.eval(storage))
                         .collect::<Vec<_>>();
-                    match func {
-                        Closure::Normal(closure) => {
-                            storage.push_scope();
-                            for (name, value) in closure.arguments.iter().zip(args.iter()) {
-                                storage.set(name, value.clone());
-                            }
-                            closure.body.eval(storage)
-                        }
-                        Closure::Native(closure) => (closure.function)(args),
-                    }
+                    ops::run_closure(func, args, storage)
                 }
                 _ => Value::Nil,
             }
@@ -293,6 +284,7 @@ impl Evaluate for Operation {
             Operator::DoubleDollar => ops::double_dollar(lhs, rhs),
             Operator::ExclusiveRange => ops::exclusive_range(lhs, rhs),
             Operator::InclusiveRange => ops::inclusive_range(lhs, rhs),
+            Operator::Modulo => ops::modulo(lhs, rhs, storage),
         }
     }
 }

@@ -1,3 +1,4 @@
+use super::{Evaluate, Storage};
 use crate::parser::*;
 
 pub fn add(lhs: Value, rhs: Value) -> Value {
@@ -313,5 +314,33 @@ pub fn triple_hash(value: Value) -> Value {
                 .collect(),
         }),
         _ => Nil,
+    }
+}
+
+pub fn modulo(lhs: Value, rhs: Value, storage: &mut Storage) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Number(lhs), Number(rhs)) => Number(lhs % rhs),
+        (Array(lhs), Closure(rhs)) => Array(ValuesArray {
+            elements: lhs
+                .elements
+                .into_iter()
+                .filter(|x| as_bool(run_closure(rhs.clone(), vec![x.clone()], storage)))
+                .collect(),
+        }),
+        _ => Nil,
+    }
+}
+
+pub fn run_closure(closure: Closure, args: Vec<Value>, storage: &mut Storage) -> Value {
+    match closure {
+        Closure::Normal(closure) => {
+            storage.push_scope();
+            for (name, value) in closure.arguments.iter().zip(args.iter()) {
+                storage.set(name, value.clone());
+            }
+            closure.body.eval(storage)
+        }
+        Closure::Native(closure) => (closure.function)(args),
     }
 }

@@ -205,6 +205,7 @@ pub mod nodes {
         DoubleDollar,
         ExclusiveRange,
         InclusiveRange,
+        Modulo,
     }
 }
 
@@ -533,6 +534,7 @@ impl ParseMulti for Expression {
                         Rule::double_dollar => Operator::DoubleDollar,
                         Rule::exclusive_range => Operator::ExclusiveRange,
                         Rule::inclusive_range => Operator::InclusiveRange,
+                        Rule::modulo => Operator::Modulo,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),

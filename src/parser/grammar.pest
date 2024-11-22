@@ -99,7 +99,8 @@ infix = _{
   and | or |
   eq | neq | lte | gte | lt | gt | 
   inclusive_range | exclusive_range | 
-  add | sub | mul | div |
+  add | sub |
+  mul | div | modulo |
   double_dollar | dollar
 }
 add = { "+" }
@@ -118,6 +119,7 @@ dollar = { "$" }
 double_dollar = { "$$" }
 exclusive_range = { ".." }
 inclusive_range = { "..." }
+modulo = { "%" }
 
 prefix = _{ 
   negate | not |

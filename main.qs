@@ -1,6 +1,2 @@
-let table = { x: 1, y: 2 }
+([1,2,3,4] % |x|x%2==0)?
 
-table?
-#table?
-##table?
-###table?

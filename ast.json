@@ -1,68 +1,70 @@
 {
    "statements": [
       {
-         "DefineAndSet": {
-            "identifier": "table",
-            "expression": {
-               "Table": {
-                  "map": {
-                     "y": {
-                        "Value": {
-                           "Number": 2.0
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Infixed": {
+                     "lhs": {
+                        "Array": {
+                           "elements": [
+                              {
+                                 "Value": {
+                                    "Number": 1.0
+                                 }
+                              },
+                              {
+                                 "Value": {
+                                    "Number": 2.0
+                                 }
+                              },
+                              {
+                                 "Value": {
+                                    "Number": 3.0
+                                 }
+                              },
+                              {
+                                 "Value": {
+                                    "Number": 4.0
+                                 }
+                              }
+                           ]
                         }
                      },
-                     "x": {
+                     "infix": "Modulo",
+                     "rhs": {
                         "Value": {
-                           "Number": 1.0
+                           "Closure": {
+                              "Normal": {
+                                 "arguments": [
+                                    "x"
+                                 ],
+                                 "body": {
+                                    "Infixed": {
+                                       "lhs": {
+                                          "Infixed": {
+                                             "lhs": {
+                                                "Identifier": "x"
+                                             },
+                                             "infix": "Modulo",
+                                             "rhs": {
+                                                "Value": {
+                                                   "Number": 2.0
+                                                }
+                                             }
+                                          }
+                                       },
+                                       "infix": "Eq",
+                                       "rhs": {
+                                          "Value": {
+                                             "Number": 0.0
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
                         }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Identifier": "table"
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Prefixed": {
-                     "Hash": {
-                        "Identifier": "table"
-                     }
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Prefixed": {
-                     "DoubleHash": {
-                        "Identifier": "table"
-                     }
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Prefixed": {
-                     "TripleHash": {
-                        "Identifier": "table"
                      }
                   }
                }
