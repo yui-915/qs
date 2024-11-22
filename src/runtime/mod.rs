@@ -270,7 +270,7 @@ impl Evaluate for Operation {
         match self.infix {
             Operator::Add => ops::add(lhs, rhs),
             Operator::Sub => ops::sub(lhs, rhs),
-            Operator::Mul => ops::mul(lhs, rhs),
+            Operator::Mul => ops::mul(lhs, rhs, storage),
             Operator::Div => ops::div(lhs, rhs),
             Operator::Eq => ops::eq(lhs, rhs),
             Operator::Neq => ops::neq(lhs, rhs),

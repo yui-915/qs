@@ -34,10 +34,17 @@ pub fn sub(lhs: Value, rhs: Value) -> Value {
     }
 }
 
-pub fn mul(lhs: Value, rhs: Value) -> Value {
+pub fn mul(lhs: Value, rhs: Value, storage: &mut Storage) -> Value {
     use Value::*;
     match (lhs, rhs) {
         (Number(lhs), Number(rhs)) => Number(lhs * rhs),
+        (Array(lhs), Closure(rhs)) => Array(ValuesArray {
+            elements: lhs
+                .elements
+                .into_iter()
+                .map(|x| run_closure(rhs.clone(), vec![x.clone()], storage))
+                .collect(),
+        }),
         _ => Nil,
     }
 }

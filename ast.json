@@ -31,7 +31,7 @@
                            ]
                         }
                      },
-                     "infix": "Modulo",
+                     "infix": "Mul",
                      "rhs": {
                         "Value": {
                            "Closure": {
@@ -42,22 +42,12 @@
                                  "body": {
                                     "Infixed": {
                                        "lhs": {
-                                          "Infixed": {
-                                             "lhs": {
-                                                "Identifier": "x"
-                                             },
-                                             "infix": "Modulo",
-                                             "rhs": {
-                                                "Value": {
-                                                   "Number": 2.0
-                                                }
-                                             }
-                                          }
+                                          "Identifier": "x"
                                        },
-                                       "infix": "Eq",
+                                       "infix": "Mul",
                                        "rhs": {
                                           "Value": {
-                                             "Number": 0.0
+                                             "Number": 2.0
                                           }
                                        }
                                     }
