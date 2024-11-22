@@ -73,8 +73,8 @@ table.x? // 1
 // [1,2,3,4] ^^- |x|x%2==0 // 2 find last index
 // [1,2,3,4] & |x|x%2==0 // false, test if all elements match
 [1,2,3,4] @ |a,b| b-a // [4, 3, 2, 1] sort
-[1,2,3,4] ~ |a,b| a+b // 10 reduce
-![1,2,3,4] // [4,3,2,1] reverse
+// [1,2,3,4] ~ |a,b| a+b // 10 reduce
+-[1,2,3,4] // [4,3,2,1] reverse
 
 
 fn := |x, y| x + y

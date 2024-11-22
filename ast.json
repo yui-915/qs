@@ -4,8 +4,8 @@
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Infixed": {
-                     "lhs": {
+                  "Prefixed": {
+                     "Negative": {
                         "Array": {
                            "elements": [
                               {
@@ -29,30 +29,6 @@
                                  }
                               }
                            ]
-                        }
-                     },
-                     "infix": "At",
-                     "rhs": {
-                        "Value": {
-                           "Closure": {
-                              "Normal": {
-                                 "arguments": [
-                                    "a",
-                                    "b"
-                                 ],
-                                 "body": {
-                                    "Infixed": {
-                                       "lhs": {
-                                          "Identifier": "b"
-                                       },
-                                       "infix": "Sub",
-                                       "rhs": {
-                                          "Identifier": "a"
-                                       }
-                                    }
-                                 }
-                              }
-                           }
                         }
                      }
                   }

@@ -24,6 +24,10 @@ pub fn negate(value: Value) -> Value {
     use Value::*;
     match value {
         Number(value) => Number(-value),
+        Array(mut array) => {
+            array.elements.reverse();
+            Array(array)
+        }
         _ => Nil,
     }
 }
