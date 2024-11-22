@@ -61,9 +61,9 @@ closure = { closure_args ~ expression }
 
 expression = { fixed_primary ~ (infix ~ fixed_primary)* }
 primary = _{ 
-  if_expr |
+  if_expr | table |
   function_call | map | value |
-  identifier | block | array | 
+  identifier | block | array |
   "(" ~ expression ~ ")"
 }
 fixed_primary = _{ prefix* ~ primary ~ postfix* }
@@ -78,6 +78,11 @@ if_expr = {
 array = { 
   "[" ~ "]" | 
   "[" ~ expression ~ ("," ~ expression)* ~ ","? ~ "]"
+}
+
+table = {
+  "{" ~ "}" | 
+  "{" ~ identifier ~ ":" ~ expression ~ ("," ~ identifier ~ ":" ~ expression)* ~ ","? ~ "}"
 }
 
 function_call = { identifier ~ ("(" ~ expression ~ ("," ~ expression)* ~ ")" | "(" ~ ")") }

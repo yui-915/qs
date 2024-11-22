@@ -1,7 +1,6 @@
-test = |x| (if x? > 5 "more" else "less")?
+{ 
+1 + 2 
+}?
+{ x: 1 + 2 }?
+{ x: 1, y: 2 }?
 
-test(1)
-test(4)
-test(5)
-test(6)
-test(69)

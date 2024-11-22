@@ -4,6 +4,8 @@ mod formater;
 mod ops;
 mod storage;
 
+use std::collections::HashMap;
+
 use crate::parser::*;
 pub use formater::*;
 pub use storage::*;
@@ -167,7 +169,20 @@ impl Evaluate for Expression {
             Expression::FunctionCall(call) => call.eval(storage),
             Expression::Array(array) => array.eval(storage),
             Expression::If(if_expression) => if_expression.eval(storage),
+            Expression::Table(table) => table.eval(storage),
         }
+    }
+}
+
+impl Evaluate for ExpressionsTable {
+    fn eval(&self, storage: &mut Storage) -> Value {
+        Value::Table(ValuesTable {
+            map: self
+                .map
+                .iter()
+                .map(|(key, value)| (key.clone(), value.eval(storage)))
+                .collect::<HashMap<_, _>>(),
+        })
     }
 }
 

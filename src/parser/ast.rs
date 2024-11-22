@@ -1,5 +1,7 @@
 pub mod nodes {
     #![allow(unused)]
+    use std::collections::HashMap;
+
     use serde::{ser::SerializeMap, Serialize, Serializer};
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -80,12 +82,18 @@ pub mod nodes {
         Map(MapExpression),
         FunctionCall(FunctionCall),
         Array(ExpressionsArray),
+        Table(ExpressionsTable),
         If(IfExpression),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub struct ExpressionsArray {
         pub elements: Vec<Expression>,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct ExpressionsTable {
+        pub map: HashMap<String, Expression>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -108,6 +116,7 @@ pub mod nodes {
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
     pub enum Value {
+        Table(ValuesTable),
         ExclusiveRange(f64, f64),
         InclusiveRange(f64, f64),
         Array(ValuesArray),
@@ -116,6 +125,11 @@ pub mod nodes {
         String(String),
         Boolean(bool),
         Nil,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Serialize)]
+    pub struct ValuesTable {
+        pub map: HashMap<String, Value>,
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -189,6 +203,8 @@ pub mod nodes {
         InclusiveRange,
     }
 }
+
+use std::collections::HashMap;
 
 use nodes::*;
 
@@ -462,6 +478,20 @@ impl ParseMulti for ExpressionsArray {
     }
 }
 
+impl ParseMulti for ExpressionsTable {
+    fn parse(mut pairs: Pairs) -> Self {
+        let mut map = HashMap::new();
+
+        while let Some(ident) = pairs.next() {
+            let key = ident.as_str().to_string();
+            let value = Expression::parse(pairs.take_().childs());
+            map.insert(key, value);
+        }
+
+        Self { map }
+    }
+}
+
 impl ParseMulti for Expression {
     fn parse(pairs: Pairs) -> Self {
         PRATT_PARSER
@@ -476,6 +506,7 @@ impl ParseMulti for Expression {
                 }
                 Rule::array => Expression::Array(ExpressionsArray::parse(primary.childs())),
                 Rule::if_expr => Expression::If(IfExpression::parse(primary.childs())),
+                Rule::table => Expression::Table(ExpressionsTable::parse(primary.childs())),
                 _ => unreachable!("{:#?}", primary),
             })
             .map_infix(|lhs, op, rhs| {

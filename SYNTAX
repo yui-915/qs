@@ -43,18 +43,20 @@ array[-2..-1] // last two elements
 array[0...2] // first three elements
 array += 1 // push
 // array += 1, 2, 3 // push multiple
-array[;-1]? // pop last element and print it
-array[;]? // same as above
-array[;0]? // pop first element and print it
-array[;0...1]? // pop first two elements (as an array) and print them
-array[] // length 
-array[~0] = -1 // insert at index 0 (NOT REPLACE)
+// array[;-1]? // pop last element and print it
+// array[;]? // same as above
+// array[;0]? // pop first element and print it
+// array[;0...1]? // pop first two elements (as an array) and print them
+// array[] // length 
+// array[~0] = -1 // insert at index 0 (NOT REPLACE)
+// array[0] = 5
+// array[0..2] = [1, 2, 3] // replace first two elements
 
 "hello"[0] // first character
 "hello"[-1] // last character
 "hello"[0..2] // first two characters
 // etc...
-"hello"[]? // 5
+// "hello"[]? // 5
 
 table := {x: 1, y: 2}
 table.x? // 1

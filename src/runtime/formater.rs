@@ -10,6 +10,17 @@ pub trait Printable {
 impl Printable for Value {
     fn fmt_print(&self) -> String {
         match self {
+            Value::Table(values_table) => {
+                format!(
+                    "{{{}}}",
+                    values_table
+                        .map
+                        .iter()
+                        .map(|(key, value)| format!("{}: {}", key, value.fmt_print()))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                )
+            }
             Value::ExclusiveRange(start, end) => format!("{}..{}", start, end),
             Value::InclusiveRange(start, end) => format!("{}...{}", start, end),
             Value::Array(values_array) => {

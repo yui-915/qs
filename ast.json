@@ -1,55 +1,52 @@
 {
    "statements": [
       {
-         "Set": {
-            "identifier": "test",
-            "op": "Set",
-            "expression": {
-               "Value": {
-                  "Closure": {
-                     "Normal": {
-                        "arguments": [
-                           "x"
-                        ],
-                        "body": {
-                           "Postfixed": {
-                              "Print": {
-                                 "If": {
-                                    "conditionals": [
-                                       [
-                                          {
-                                             "Infixed": {
-                                                "lhs": {
-                                                   "Postfixed": {
-                                                      "Print": {
-                                                         "Identifier": "x"
-                                                      }
-                                                   }
-                                                },
-                                                "infix": "Gt",
-                                                "rhs": {
-                                                   "Value": {
-                                                      "Number": 5.0
-                                                   }
-                                                }
-                                             }
-                                          },
-                                          {
-                                             "Expression": {
-                                                "Value": {
-                                                   "String": "more"
-                                                }
-                                             }
-                                          }
-                                       ]
-                                    ],
-                                    "otherwise": {
-                                       "Expression": {
-                                          "Value": {
-                                             "String": "less"
-                                          }
-                                       }
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Block": {
+                     "statements": [
+                        {
+                           "Expression": {
+                              "Infixed": {
+                                 "lhs": {
+                                    "Value": {
+                                       "Number": 1.0
                                     }
+                                 },
+                                 "infix": "Add",
+                                 "rhs": {
+                                    "Value": {
+                                       "Number": 2.0
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     ],
+                     "functions": []
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Table": {
+                     "map": {
+                        "x": {
+                           "Infixed": {
+                              "lhs": {
+                                 "Value": {
+                                    "Number": 1.0
+                                 }
+                              },
+                              "infix": "Add",
+                              "rhs": {
+                                 "Value": {
+                                    "Number": 2.0
                                  }
                               }
                            }
@@ -62,71 +59,23 @@
       },
       {
          "Expression": {
-            "FunctionCall": {
-               "name": "test",
-               "arguments": [
-                  {
-                     "Value": {
-                        "Number": 1.0
+            "Postfixed": {
+               "Print": {
+                  "Table": {
+                     "map": {
+                        "x": {
+                           "Value": {
+                              "Number": 1.0
+                           }
+                        },
+                        "y": {
+                           "Value": {
+                              "Number": 2.0
+                           }
+                        }
                      }
                   }
-               ]
-            }
-         }
-      },
-      {
-         "Expression": {
-            "FunctionCall": {
-               "name": "test",
-               "arguments": [
-                  {
-                     "Value": {
-                        "Number": 4.0
-                     }
-                  }
-               ]
-            }
-         }
-      },
-      {
-         "Expression": {
-            "FunctionCall": {
-               "name": "test",
-               "arguments": [
-                  {
-                     "Value": {
-                        "Number": 5.0
-                     }
-                  }
-               ]
-            }
-         }
-      },
-      {
-         "Expression": {
-            "FunctionCall": {
-               "name": "test",
-               "arguments": [
-                  {
-                     "Value": {
-                        "Number": 6.0
-                     }
-                  }
-               ]
-            }
-         }
-      },
-      {
-         "Expression": {
-            "FunctionCall": {
-               "name": "test",
-               "arguments": [
-                  {
-                     "Value": {
-                        "Number": 69.0
-                     }
-                  }
-               ]
+               }
             }
          }
       }

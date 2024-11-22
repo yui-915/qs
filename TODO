@@ -1,8 +1,10 @@
 make function calls a postfix
-add ranges
+fix ranges
 fix ops.rs
 fix formatter.rs (add colors and debug)
 add some standrads library functions
 lsp
 fix how range index is implemented
 for loop with else
+is {} a table or a block?
+newlines and whitespace
