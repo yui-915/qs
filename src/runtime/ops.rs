@@ -350,9 +350,11 @@ pub fn run_closure(closure: Closure, args: Vec<Value>, storage: &mut Storage) ->
         Closure::Normal(closure) => {
             storage.push_scope();
             for (name, value) in closure.arguments.iter().zip(args.iter()) {
-                storage.set(name, value.clone());
+                storage.define(name, value.clone());
             }
-            closure.body.eval(storage)
+            let res = closure.body.eval(storage);
+            storage.pop_scope();
+            res
         }
         Closure::Native(closure) => (closure.function)(args),
     }

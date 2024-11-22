@@ -1,36 +1,113 @@
 {
    "statements": [
       {
+         "Set": {
+            "identifier": "fib",
+            "op": "Set",
+            "expression": {
+               "Value": {
+                  "Closure": {
+                     "Normal": {
+                        "arguments": [
+                           "n"
+                        ],
+                        "body": {
+                           "Map": {
+                              "input": {
+                                 "Identifier": "n"
+                              },
+                              "map": [
+                                 [
+                                    [
+                                       {
+                                          "Value": {
+                                             "Number": 0.0
+                                          }
+                                       },
+                                       {
+                                          "Value": {
+                                             "Number": 1.0
+                                          }
+                                       }
+                                    ],
+                                    {
+                                       "Identifier": "n"
+                                    }
+                                 ],
+                                 [
+                                    [
+                                       {
+                                          "Identifier": "_"
+                                       }
+                                    ],
+                                    {
+                                       "Infixed": {
+                                          "lhs": {
+                                             "FunctionCall": {
+                                                "name": "fib",
+                                                "arguments": [
+                                                   {
+                                                      "Infixed": {
+                                                         "lhs": {
+                                                            "Identifier": "n"
+                                                         },
+                                                         "infix": "Sub",
+                                                         "rhs": {
+                                                            "Value": {
+                                                               "Number": 1.0
+                                                            }
+                                                         }
+                                                      }
+                                                   }
+                                                ]
+                                             }
+                                          },
+                                          "infix": "Add",
+                                          "rhs": {
+                                             "FunctionCall": {
+                                                "name": "fib",
+                                                "arguments": [
+                                                   {
+                                                      "Infixed": {
+                                                         "lhs": {
+                                                            "Identifier": "n"
+                                                         },
+                                                         "infix": "Sub",
+                                                         "rhs": {
+                                                            "Value": {
+                                                               "Number": 2.0
+                                                            }
+                                                         }
+                                                      }
+                                                   }
+                                                ]
+                                             }
+                                          }
+                                       }
+                                    }
+                                 ]
+                              ]
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Prefixed": {
-                     "Negative": {
-                        "Array": {
-                           "elements": [
-                              {
-                                 "Value": {
-                                    "Number": 1.0
-                                 }
-                              },
-                              {
-                                 "Value": {
-                                    "Number": 2.0
-                                 }
-                              },
-                              {
-                                 "Value": {
-                                    "Number": 3.0
-                                 }
-                              },
-                              {
-                                 "Value": {
-                                    "Number": 4.0
-                                 }
-                              }
-                           ]
+                  "FunctionCall": {
+                     "name": "fib",
+                     "arguments": [
+                        {
+                           "Value": {
+                              "Number": 25.0
+                           }
                         }
-                     }
+                     ]
                   }
                }
             }
