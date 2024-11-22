@@ -123,8 +123,9 @@ prefix = _{ negate | not }
 negate = { "-" }
 not = { "!" }
 
-postfix = _{ debug | print | index }
+postfix = _{ debug | print | index | dot_index }
 debug = @{ "?" ~ "?"+ }
 print = @{ "?" }
 index = { "[" ~ expression ~ "]" }
+dot_index = { "." ~ identifier }
 

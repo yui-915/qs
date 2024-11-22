@@ -1,79 +1,66 @@
 {
    "statements": [
       {
+         "DefineAndSet": {
+            "identifier": "table",
+            "expression": {
+               "Table": {
+                  "map": {
+                     "x": {
+                        "Value": {
+                           "Number": 1.0
+                        }
+                     },
+                     "y": {
+                        "Value": {
+                           "Number": 2.0
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Block": {
-                     "statements": [
+                  "Identifier": "table"
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "Index": [
                         {
-                           "Expression": {
-                              "Infixed": {
-                                 "lhs": {
-                                    "Value": {
-                                       "Number": 1.0
-                                    }
-                                 },
-                                 "infix": "Add",
-                                 "rhs": {
-                                    "Value": {
-                                       "Number": 2.0
-                                    }
-                                 }
-                              }
-                           }
-                        }
-                     ],
-                     "functions": []
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Table": {
-                     "map": {
-                        "x": {
-                           "Infixed": {
-                              "lhs": {
-                                 "Value": {
-                                    "Number": 1.0
-                                 }
-                              },
-                              "infix": "Add",
-                              "rhs": {
-                                 "Value": {
-                                    "Number": 2.0
-                                 }
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      {
-         "Expression": {
-            "Postfixed": {
-               "Print": {
-                  "Table": {
-                     "map": {
-                        "x": {
-                           "Value": {
-                              "Number": 1.0
-                           }
+                           "Identifier": "table"
                         },
-                        "y": {
+                        {
                            "Value": {
-                              "Number": 2.0
+                              "String": "x"
                            }
                         }
-                     }
+                     ]
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Postfixed": {
+                     "DotIndex": [
+                        {
+                           "Identifier": "table"
+                        },
+                        "x"
+                     ]
                   }
                }
             }

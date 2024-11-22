@@ -324,6 +324,10 @@ impl Evaluate for PostfixedExpression {
                 let index = index.eval(storage);
                 ops::index(value, index)
             }
+            PostfixedExpression::DotIndex(expression, index) => {
+                let value = expression.eval(storage);
+                ops::dot_index(value, index.clone())
+            }
         }
     }
 }

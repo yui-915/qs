@@ -217,10 +217,10 @@ pub fn erange_to_idxs(start: f64, end: f64, len: usize) -> Option<(usize, usize)
     }
 }
 
-pub fn index(value: Value, index: Value) -> Value {
+pub fn index(value: Value, idx: Value) -> Value {
     use Value::*;
     match value {
-        Array(arr) => match index {
+        Array(arr) => match idx {
             Number(index) => to_index(index, arr.elements.len())
                 .map(|i| arr.elements[i].clone())
                 .unwrap_or(Nil),
@@ -244,10 +244,22 @@ pub fn index(value: Value, index: Value) -> Value {
                     _ => Nil,
                 }
             }
+            String(key) => key
+                .parse::<f64>()
+                .map(|key| index(Value::Array(arr), Value::Number(key)))
+                .unwrap_or(Nil),
+            _ => Nil,
+        },
+        Table(table) => match idx {
+            Value::String(key) => table.map.get(&key).cloned().unwrap_or(Nil),
             _ => Nil,
         },
         _ => Nil,
     }
+}
+
+pub fn dot_index(value: Value, idx: String) -> Value {
+    index(value, Value::String(idx))
 }
 
 pub fn exclusive_range(lhs: Value, rhs: Value) -> Value {

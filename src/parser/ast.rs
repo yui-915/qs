@@ -174,6 +174,7 @@ pub mod nodes {
         Debug(Box<Expression>),
         Print(Box<Expression>),
         Index(Box<Expression>, Box<Expression>),
+        DotIndex(Box<Expression>, String),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -545,6 +546,10 @@ impl ParseMulti for Expression {
                 Rule::index => Expression::Postfixed(PostfixedExpression::Index(
                     Box::new(lhs),
                     Box::new(Expression::parse(op.childs())),
+                )),
+                Rule::dot_index => Expression::Postfixed(PostfixedExpression::DotIndex(
+                    Box::new(lhs),
+                    op.first_child().as_str().to_string(),
                 )),
                 _ => unreachable!("{:#?}", op),
             })
