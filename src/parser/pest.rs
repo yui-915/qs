@@ -32,7 +32,7 @@ lazy_static::lazy_static! {
             .op(Op::infix(exclusive_range, Left) | Op::infix(inclusive_range, Left))
             .op(Op::infix(add, Left) | Op::infix(sub, Left))
             .op(Op::infix(mul, Left) | Op::infix(div, Left) |
-                Op::infix(modulo, Left))
+                Op::infix(modulo, Left) | Op::infix(at, Left))
             .op(Op::infix(dollar, Left) | Op::infix(double_dollar, Left))
             .op(Op::postfix(debug) | Op::postfix(print))
             .op(Op::postfix(index) | Op::postfix(dot_index))

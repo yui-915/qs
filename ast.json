@@ -31,24 +31,23 @@
                            ]
                         }
                      },
-                     "infix": "Mul",
+                     "infix": "At",
                      "rhs": {
                         "Value": {
                            "Closure": {
                               "Normal": {
                                  "arguments": [
-                                    "x"
+                                    "a",
+                                    "b"
                                  ],
                                  "body": {
                                     "Infixed": {
                                        "lhs": {
-                                          "Identifier": "x"
+                                          "Identifier": "b"
                                        },
-                                       "infix": "Mul",
+                                       "infix": "Sub",
                                        "rhs": {
-                                          "Value": {
-                                             "Number": 2.0
-                                          }
+                                          "Identifier": "a"
                                        }
                                     }
                                  }

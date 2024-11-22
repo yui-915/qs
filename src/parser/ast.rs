@@ -206,6 +206,7 @@ pub mod nodes {
         ExclusiveRange,
         InclusiveRange,
         Modulo,
+        At,
     }
 }
 
@@ -535,6 +536,7 @@ impl ParseMulti for Expression {
                         Rule::exclusive_range => Operator::ExclusiveRange,
                         Rule::inclusive_range => Operator::InclusiveRange,
                         Rule::modulo => Operator::Modulo,
+                        Rule::at => Operator::At,
                         _ => unreachable!("{:#?}", op),
                     },
                     rhs: Box::new(rhs),

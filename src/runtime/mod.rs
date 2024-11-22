@@ -285,6 +285,7 @@ impl Evaluate for Operation {
             Operator::ExclusiveRange => ops::exclusive_range(lhs, rhs),
             Operator::InclusiveRange => ops::inclusive_range(lhs, rhs),
             Operator::Modulo => ops::modulo(lhs, rhs, storage),
+            Operator::At => ops::at(lhs, rhs, storage),
         }
     }
 }

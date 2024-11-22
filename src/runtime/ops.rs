@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use super::{Evaluate, Storage};
 use crate::parser::*;
 
@@ -349,5 +351,22 @@ pub fn run_closure(closure: Closure, args: Vec<Value>, storage: &mut Storage) ->
             closure.body.eval(storage)
         }
         Closure::Native(closure) => (closure.function)(args),
+    }
+}
+
+pub fn at(lhs: Value, rhs: Value, storage: &mut Storage) -> Value {
+    use Value::*;
+    match (lhs, rhs) {
+        (Array(mut lhs), Closure(rhs)) => {
+            lhs.elements.sort_by(|a, b| {
+                let res = run_closure(rhs.clone(), vec![a.clone(), b.clone()], storage);
+                match res {
+                    Value::Number(res) => res.partial_cmp(&0.).unwrap(),
+                    _ => Ordering::Equal,
+                }
+            });
+            Array(lhs)
+        }
+        _ => Nil,
     }
 }
