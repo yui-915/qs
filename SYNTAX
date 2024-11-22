@@ -60,7 +60,7 @@ array += 1 // push
 
 table := {x: 1, y: 2}
 table.x? // 1
-table.z = 3
+// table.z = 3
 #table? // ["x", "y", "z"]
 ##table? // [1, 2, 3]
 ###table? // [["x", 1], ["y", 2], ["z", 3]]

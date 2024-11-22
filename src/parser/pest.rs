@@ -35,6 +35,7 @@ lazy_static::lazy_static! {
             .op(Op::infix(dollar, Left) | Op::infix(double_dollar, Left))
             .op(Op::postfix(debug) | Op::postfix(print))
             .op(Op::postfix(index) | Op::postfix(dot_index))
-            .op(Op::prefix(negate) | Op::prefix(not))
+            .op(Op::prefix(negate) | Op::prefix(not) |
+                Op::prefix(triple_hash) | Op::prefix(double_hash) | Op::prefix(hash))
     };
 }

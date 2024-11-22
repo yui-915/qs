@@ -277,3 +277,41 @@ pub fn inclusive_range(lhs: Value, rhs: Value) -> Value {
         _ => Nil,
     }
 }
+
+pub fn hash(value: Value) -> Value {
+    use Value::*;
+    match value {
+        Table(table) => Value::Array(ValuesArray {
+            elements: table.map.keys().cloned().map(Value::String).collect(),
+        }),
+        _ => Nil,
+    }
+}
+
+pub fn double_hash(value: Value) -> Value {
+    use Value::*;
+    match value {
+        Table(table) => Value::Array(ValuesArray {
+            elements: table.map.values().cloned().collect(),
+        }),
+        _ => Nil,
+    }
+}
+
+pub fn triple_hash(value: Value) -> Value {
+    use Value::*;
+    match value {
+        Table(table) => Value::Array(ValuesArray {
+            elements: table
+                .map
+                .into_iter()
+                .map(|(k, v)| {
+                    Value::Array(ValuesArray {
+                        elements: vec![Value::String(k), v],
+                    })
+                })
+                .collect(),
+        }),
+        _ => Nil,
+    }
+}

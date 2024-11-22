@@ -119,9 +119,15 @@ double_dollar = { "$$" }
 exclusive_range = { ".." }
 inclusive_range = { "..." }
 
-prefix = _{ negate | not }
+prefix = _{ 
+  negate | not |
+  triple_hash | double_hash | hash 
+}
 negate = { "-" }
 not = { "!" }
+hash = { "#" }
+double_hash = { "##" }
+triple_hash = { "###" }
 
 postfix = _{ debug | print | index | dot_index }
 debug = @{ "?" ~ "?"+ }

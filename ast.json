@@ -6,14 +6,14 @@
             "expression": {
                "Table": {
                   "map": {
-                     "x": {
-                        "Value": {
-                           "Number": 1.0
-                        }
-                     },
                      "y": {
                         "Value": {
                            "Number": 2.0
+                        }
+                     },
+                     "x": {
+                        "Value": {
+                           "Number": 1.0
                         }
                      }
                   }
@@ -34,17 +34,10 @@
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Postfixed": {
-                     "Index": [
-                        {
-                           "Identifier": "table"
-                        },
-                        {
-                           "Value": {
-                              "String": "x"
-                           }
-                        }
-                     ]
+                  "Prefixed": {
+                     "Hash": {
+                        "Identifier": "table"
+                     }
                   }
                }
             }
@@ -54,13 +47,23 @@
          "Expression": {
             "Postfixed": {
                "Print": {
-                  "Postfixed": {
-                     "DotIndex": [
-                        {
-                           "Identifier": "table"
-                        },
-                        "x"
-                     ]
+                  "Prefixed": {
+                     "DoubleHash": {
+                        "Identifier": "table"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "Expression": {
+            "Postfixed": {
+               "Print": {
+                  "Prefixed": {
+                     "TripleHash": {
+                        "Identifier": "table"
+                     }
                   }
                }
             }

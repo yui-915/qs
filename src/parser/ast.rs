@@ -167,6 +167,9 @@ pub mod nodes {
     pub enum PrefixedExpression {
         Negative(Box<Expression>),
         Not(Box<Expression>),
+        Hash(Box<Expression>),
+        DoubleHash(Box<Expression>),
+        TripleHash(Box<Expression>),
     }
 
     #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -538,6 +541,13 @@ impl ParseMulti for Expression {
             .map_prefix(|op, rhs| match op.as_rule() {
                 Rule::negate => Expression::Prefixed(PrefixedExpression::Negative(Box::new(rhs))),
                 Rule::not => Expression::Prefixed(PrefixedExpression::Not(Box::new(rhs))),
+                Rule::hash => Expression::Prefixed(PrefixedExpression::Hash(Box::new(rhs))),
+                Rule::double_hash => {
+                    Expression::Prefixed(PrefixedExpression::DoubleHash(Box::new(rhs)))
+                }
+                Rule::triple_hash => {
+                    Expression::Prefixed(PrefixedExpression::TripleHash(Box::new(rhs)))
+                }
                 _ => unreachable!("{:#?}", op),
             })
             .map_postfix(|lhs, op| match op.as_rule() {

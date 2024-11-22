@@ -302,6 +302,13 @@ impl Evaluate for PrefixedExpression {
         match self {
             PrefixedExpression::Negative(expression) => ops::negate(expression.eval(storage)),
             PrefixedExpression::Not(expression) => ops::not(expression.eval(storage)),
+            PrefixedExpression::Hash(expression) => ops::hash(expression.eval(storage)),
+            PrefixedExpression::DoubleHash(expression) => {
+                ops::double_hash(expression.eval(storage))
+            }
+            PrefixedExpression::TripleHash(expression) => {
+                ops::triple_hash(expression.eval(storage))
+            }
         }
     }
 }
